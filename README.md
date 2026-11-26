@@ -1,4 +1,32 @@
-# nib
+<p align="center">
+  <img src="assets/nib-appicon.svg" width="128" height="128" alt="nib">
+</p>
+
+<p align="center"><b>Text lives here. Nothing leaves the machine.</b></p>
+
+<p align="center">
+  github.com/Raghav2012Code/nib: the source, the spec and the releases.<br>
+  Liked nib? <a href="https://github.com/Raghav2012Code/nib">Star it there</a>, one click is enough.
+</p>
+
+<p align="center">
+  <a href="docs/spec.md"><img src="https://img.shields.io/badge/read-the%20spec-3d5e80?style=flat-square" alt="Read the spec"></a>
+  <a href="docs/design/cli-splash.md"><img src="https://img.shields.io/badge/see-the%20terminal-b4531f?style=flat-square" alt="See the terminal"></a>
+  <img src="https://img.shields.io/badge/status-pre--alpha-8f8d87?style=flat-square" alt="Pre-alpha">
+  <img src="https://img.shields.io/badge/license-MIT-3d5e80?style=flat-square" alt="MIT">
+</p>
+
+A native Windows app with a terminal beside it, both over one local store. Windows 10 and 11 first. Plain text pastes, up to 64 KB each, full-text search over every one of them. No account, no trial, no telemetry, no network calls.
+
+**Pre-alpha.** The design is written and the mark is drawn; there is no code yet. What follows is what the first release does, not what builds today.
+
+| <img src="assets/nib-mark.svg" width="24" alt=""> | <img src="assets/nib-mark.svg" width="24" alt=""> | <img src="assets/nib-mark.svg" width="24" alt=""> | <img src="assets/nib-mark.svg" width="24" alt=""> |
+|:---:|:---:|:---:|:---:|
+| **Local only** | **Searchable** | **Shared by file** | **Open** |
+| 0 bytes uploaded | Text, not just titles | Export one paste | MIT license |
+| The whole store is one SQLite file on your disk | FTS5 over every paste, matches shown as snippets | No links, no relay, no service in the middle | Source, spec and design decisions in the repo |
+
+## In the terminal
 
 ```
  ▄███▄
@@ -11,24 +39,23 @@
    ▀
 ```
 
-An offline pastebin: one local store for text, reachable from the terminal and from a desktop window. No network, no account, no sync.
+```
+echo "kubectl get pods -A" | nib      # 4f2a
+nib search "get pods"                 # finds it by content
+nib 4f2a > run.txt                    # byte-exact when piped
+```
 
-**Status: pre-alpha.** The design is written and the mark is drawn; there is no code yet.
+`nib` alone opens a three-line launcher: add, find, recent. No full-screen TUI, no arrow keys, no modes.
 
-## What it will do
+## Secrets
 
-- `echo "text" | nib` stores it and prints a four-character ID
-- `nib search <term>` finds any paste by its content, with a snippet
-- `nib get <id>` prints it back, byte-exact when piped
-- optional per-paste passphrase encryption for secrets
-- a two-pane desktop app over the same SQLite file
-- one launcher when you type `nib` alone
+Any paste can be sealed with its own passphrase — Argon2id plus XChaCha20-Poly1305. A sealed paste is never indexed, so search cannot leak it, and its label is the only thing stored in the clear.
 
 ## Docs
 
 - [Design spec](docs/spec.md) — scope, data model, CLI surface, app, packaging
-- [CLI splash](docs/design/cli-splash.md) — the screen and its rules
-- [Logo](docs/design/logo.md) — the terminal mark, the SVG assets, the ramp
+- [CLI splash](docs/design/cli-splash.md) — the screen, the mark, the rules
+- [Logo](docs/design/logo.md) — the terminal mark and the SVG assets
 - [Questionnaire](docs/design/questionnaire.md) — the questions the design answers
 
 ## Install
