@@ -5,7 +5,7 @@
 <p align="center"><b>Text lives here. Nothing leaves the machine.</b></p>
 
 <p align="center">
-  github.com/Raghav2012Code/nib — source, spec and releases.<br>
+  github.com/Raghav2012Code/nib — source and spec.<br>
   Liked nib? <a href="https://github.com/Raghav2012Code/nib">Star it there</a>, one click is enough.
 </p>
 
