@@ -22,7 +22,7 @@ Design width 56 columns; everything is centred in the real width, the box spans 
                         ████ ████
                          ███ ███
                           ██ ██
-                          ▀▀▄▀▀
+                          ▀▀█▀▀
 
                           n i b
 

@@ -14,13 +14,13 @@ A fountain-pen nib drawn as pixels: steel body, a slit that splits it into two t
 ████ ████
  ███ ███
   ██ ██
-  ▀▀▄▀▀
+  ▀▀█▀▀
 ```
 
 - 9 columns × 10 rows of half-block cells, each cell two square pixels.
 - Stepped round crown, straight body, then the slit opens and the tines step in to a point.
 - No breather hole. The slit starts with a half-cell notch (`▀`), which at this size reads as the hole.
-- The last row is `▀▀▄▀▀`: the tines end half a cell above the point, and the ember is that lower half. The point protrudes.
+- The last row is `▀▀█▀▀`: the tines stop at mid-cell and the ember runs a full cell, so the point touches the slit above and hangs one pixel below the tines.
 
 ## Colour
 
@@ -37,7 +37,7 @@ The body runs a steel ramp top to bottom; the point is ember. Row colours, in or
 | 7 | `████ ████` | `#628bb0` |
 | 8 | ` ███ ███` | `#547da2` |
 | 9 | `  ██ ██` | `#487094` |
-| 10 | `  ▀▀▄▀▀` | `#3d5e80`, point `#e07a45` |
+| 10 | `  ▀▀█▀▀` | `#3d5e80`, point `#e07a45` |
 
 One warm pixel in the whole mark: the point.
 
