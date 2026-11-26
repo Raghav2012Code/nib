@@ -17,15 +17,15 @@
   <img src="https://img.shields.io/badge/license-MIT-3d5e80?style=flat-square" alt="MIT">
 </p>
 
-A native Windows app with a terminal beside it, both over one local store. Windows 10 and 11 first. Plain text pastes, up to 64 KB each, full-text search over every one of them. No account, no trial, no telemetry, no network calls.
+A native Windows app with a terminal beside it, both over one local store. Windows 10 and 11 first. Plain text, up to 64 KB a paste.
 
 **Pre-alpha.** The CLI and the window both build and run; there is no installer yet. CI runs the tests on Windows and Ubuntu, and builds the app on Windows.
 
-| <img src="assets/nib-appicon.svg" width="34" alt=""> | <img src="assets/nib-appicon.svg" width="34" alt=""> | <img src="assets/nib-appicon.svg" width="34" alt=""> | <img src="assets/nib-appicon.svg" width="34" alt=""> |
-|:---:|:---:|:---:|:---:|
-| **Local only** | **Searchable** | **Portable** | **Open** |
-| 0 bytes uploaded | Content, not titles | One file per export | MIT license |
-| One SQLite file on your disk | FTS5 over every paste, snippets too | No link, no relay, no service | Source, spec and design in the repo |
+## What it is
+
+- **Local.** One SQLite file on your disk. Nothing is uploaded.
+- **Searchable.** FTS5 over the text of every paste, matches shown as snippets.
+- **Yours.** MIT, no account, no relay, no telemetry, no network calls.
 
 ## In the terminal
 
