@@ -21,3 +21,6 @@ desktop.ini
 .vscode/
 .idea/
 *.swp
+
+# Tool output
+.openchamber/
