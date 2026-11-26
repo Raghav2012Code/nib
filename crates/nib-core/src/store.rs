@@ -1,7 +1,7 @@
 use std::path::{Path, PathBuf};
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
-use rusqlite::{params, Connection, OptionalExtension};
+use rusqlite::{Connection, OptionalExtension, params};
 
 use crate::crypto;
 use crate::error::{Error, Result};
@@ -11,6 +11,7 @@ pub const MAX_BODY: usize = 64 * 1024;
 
 pub struct Store {
     conn: Connection,
+    path: PathBuf,
 }
 
 #[derive(Debug, Default, Clone)]
@@ -51,7 +52,10 @@ impl Store {
             std::fs::create_dir_all(dir)?;
         }
         let conn = Connection::open(path)?;
-        let store = Store { conn };
+        let store = Store {
+            conn,
+            path: path.to_path_buf(),
+        };
         store.migrate()?;
         store.purge()?;
         Ok(store)
@@ -68,12 +72,18 @@ impl Store {
         Store::open(&path)
     }
 
+    pub fn path(&self) -> &Path {
+        &self.path
+    }
+
     fn migrate(&self) -> Result<()> {
         self.conn.execute_batch(
             "PRAGMA journal_mode = WAL;
              PRAGMA busy_timeout = 5000;",
         )?;
-        let version: i64 = self.conn.query_row("PRAGMA user_version", [], |r| r.get(0))?;
+        let version: i64 = self
+            .conn
+            .query_row("PRAGMA user_version", [], |r| r.get(0))?;
         if version < 1 {
             self.conn.execute_batch(
                 "BEGIN;
@@ -136,7 +146,12 @@ impl Store {
             )
             .optional()?
             .ok_or_else(|| Error::NotFound(id_or_prefix.to_string()))?;
-        Ok(Paste { id, body, enc, label })
+        Ok(Paste {
+            id,
+            body,
+            enc,
+            label,
+        })
     }
 
     pub fn reveal(&self, id_or_prefix: &str, passphrase: &str) -> Result<String> {
@@ -174,7 +189,7 @@ impl Store {
             return Ok(Vec::new());
         }
         let mut stmt = self.conn.prepare(
-            "SELECT f.id, snippet(pastes_fts, -1, '', '', '…', 12), p.body, p.enc, p.label
+            "SELECT f.id, snippet(pastes_fts, -1, char(1), char(2), '…', 12), p.body, p.enc, p.label
              FROM pastes_fts f
              JOIN pastes p ON p.id = f.id
              WHERE pastes_fts MATCH ?1
@@ -198,13 +213,15 @@ impl Store {
     pub fn update(&self, id_or_prefix: &str, body: &str) -> Result<()> {
         check_size(body)?;
         let id = self.resolve(id_or_prefix)?;
-        let enc: bool = self.conn.query_row(
-            "SELECT enc FROM pastes WHERE id = ?1",
-            [&id],
-            |r| Ok(r.get::<_, i64>(0)? != 0),
-        )?;
+        let enc: bool =
+            self.conn
+                .query_row("SELECT enc FROM pastes WHERE id = ?1", [&id], |r| {
+                    Ok(r.get::<_, i64>(0)? != 0)
+                })?;
         if enc {
-            return Err(Error::Message(format!("{id} is sealed, edit needs its passphrase")));
+            return Err(Error::Message(format!(
+                "{id} is sealed, edit needs its passphrase"
+            )));
         }
         self.conn.execute(
             "UPDATE pastes SET body = ?2, size = ?3, updated_at = ?4 WHERE id = ?1",
@@ -217,7 +234,8 @@ impl Store {
 
     pub fn delete(&self, id_or_prefix: &str) -> Result<()> {
         let id = self.resolve(id_or_prefix)?;
-        self.conn.execute("DELETE FROM pastes WHERE id = ?1", [&id])?;
+        self.conn
+            .execute("DELETE FROM pastes WHERE id = ?1", [&id])?;
         self.unindex(&id)?;
         Ok(())
     }
@@ -260,7 +278,9 @@ impl Store {
         }
         let exact: Option<String> = self
             .conn
-            .query_row("SELECT id FROM pastes WHERE id = ?1", [&prefix], |r| r.get(0))
+            .query_row("SELECT id FROM pastes WHERE id = ?1", [&prefix], |r| {
+                r.get(0)
+            })
             .optional()?;
         if let Some(id) = exact {
             return Ok(id);
@@ -274,7 +294,10 @@ impl Store {
         match matches.len() {
             0 => Err(Error::NotFound(id_or_prefix.to_string())),
             1 => Ok(matches.into_iter().next().unwrap()),
-            _ => Err(Error::Ambiguous(id_or_prefix.to_string(), matches.join(", "))),
+            _ => Err(Error::Ambiguous(
+                id_or_prefix.to_string(),
+                matches.join(", "),
+            )),
         }
     }
 }
@@ -407,7 +430,10 @@ mod tests {
             assert!(!hits[0].snippet.is_empty());
         }
         assert!(store.search("nothing-like-this", 10).unwrap().is_empty());
-        assert!(store.search("ab", 10).unwrap().is_empty(), "trigram needs three characters");
+        assert!(
+            store.search("ab", 10).unwrap().is_empty(),
+            "trigram needs three characters"
+        );
     }
 
     #[test]
@@ -416,7 +442,11 @@ mod tests {
         let id = store
             .add(
                 "deploy-key-xyz",
-                AddOptions { secret: Some("pw".into()), label: Some("deploy key".into()), ..Default::default() },
+                AddOptions {
+                    secret: Some("pw".into()),
+                    label: Some("deploy key".into()),
+                    ..Default::default()
+                },
             )
             .unwrap();
 
@@ -439,7 +469,13 @@ mod tests {
         {
             let store = Store::open(&path).unwrap();
             store
-                .add("short lived", AddOptions { ttl: Some(Duration::from_millis(1)), ..Default::default() })
+                .add(
+                    "short lived",
+                    AddOptions {
+                        ttl: Some(Duration::from_millis(1)),
+                        ..Default::default()
+                    },
+                )
                 .unwrap();
         }
         std::thread::sleep(Duration::from_millis(10));

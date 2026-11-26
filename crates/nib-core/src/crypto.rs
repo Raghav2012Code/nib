@@ -1,8 +1,8 @@
 //! Per-paste sealing: Argon2id for the key, XChaCha20-Poly1305 for the text.
 
 use argon2::{Algorithm, Argon2, Params, Version};
-use base64::engine::general_purpose::STANDARD;
 use base64::Engine;
+use base64::engine::general_purpose::STANDARD;
 use chacha20poly1305::aead::{Aead, Payload};
 use chacha20poly1305::{Key, KeyInit, XChaCha20Poly1305, XNonce};
 
@@ -22,7 +22,10 @@ pub fn seal(id: &str, passphrase: &str, plaintext: &[u8]) -> Result<String> {
     let sealed = cipher
         .encrypt(
             &XNonce::from(nonce_bytes),
-            Payload { msg: plaintext, aad: id.as_bytes() },
+            Payload {
+                msg: plaintext,
+                aad: id.as_bytes(),
+            },
         )
         .map_err(|_| Error::Message("sealing failed".into()))?;
 
@@ -47,13 +50,18 @@ pub fn open(id: &str, passphrase: &str, envelope: &str) -> Result<String> {
     let (salt, rest) = raw.split_at(SALT_LEN);
     let (nonce, ciphertext) = rest.split_at(NONCE_LEN);
     let key = derive(id, passphrase, salt)?;
-    let nonce: [u8; NONCE_LEN] = nonce.try_into().map_err(|_| Error::Unlock(id.to_string()))?;
+    let nonce: [u8; NONCE_LEN] = nonce
+        .try_into()
+        .map_err(|_| Error::Unlock(id.to_string()))?;
 
     let cipher = XChaCha20Poly1305::new(&Key::from(key));
     let plain = cipher
         .decrypt(
             &XNonce::from(nonce),
-            Payload { msg: ciphertext, aad: id.as_bytes() },
+            Payload {
+                msg: ciphertext,
+                aad: id.as_bytes(),
+            },
         )
         .map_err(|_| Error::Unlock(id.to_string()))?;
 

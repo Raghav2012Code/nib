@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["crates/nib-core"]
+members = ["crates/nib-core", "crates/nib-cli"]
 
 [workspace.package]
 version = "0.1.0"

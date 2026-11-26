@@ -8,4 +8,4 @@ mod ids;
 mod store;
 
 pub use error::{Error, Result};
-pub use store::{AddOptions, Hit, Paste, Store, Summary, MAX_BODY};
+pub use store::{AddOptions, Hit, MAX_BODY, Paste, Store, Summary};
