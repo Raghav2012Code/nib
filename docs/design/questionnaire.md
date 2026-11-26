@@ -1,4 +1,6 @@
-# Local Pastebin — discovery questionnaire
+# Nib — discovery questionnaire
+
+> **Answered on 2026-11-26, kept as the record.** The questions were written before the product had a name, so they use the working name `pb` and the folder `local-pastebin`; both became **Nib** and `nib`. Nothing below was edited after the answers came in.
 
 **Purpose:** settle the decisions that change the architecture, so the spec is not built on guesses.
 

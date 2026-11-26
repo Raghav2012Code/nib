@@ -1,0 +1,134 @@
+.page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 56px 24px 96px;
+}
+
+.hero {
+  text-align: center;
+}
+
+.mark {
+  display: block;
+  margin: 0 auto 24px;
+  border-radius: 20px;
+}
+
+.title {
+  font-size: 2.4rem;
+  line-height: 1.15;
+  margin: 0 0 12px;
+  letter-spacing: -0.01em;
+}
+
+.lead {
+  max-width: 46ch;
+  margin: 0 auto 28px;
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.7;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.primary,
+.secondary {
+  display: inline-block;
+  padding: 7px 14px;
+  border-radius: 2px;
+  border: 1px solid var(--ifm-color-primary);
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.primary {
+  background: var(--ifm-color-primary);
+  color: var(--ifm-background-color);
+}
+
+.primary:hover {
+  background: var(--ifm-color-primary-dark);
+  color: var(--ifm-background-color);
+  text-decoration: none;
+}
+
+.secondary {
+  color: var(--ifm-color-primary);
+}
+
+.secondary:hover {
+  background: var(--ifm-color-primary-contrast-background);
+  text-decoration: none;
+}
+
+.terminal {
+  text-align: left;
+  margin: 0 auto;
+  max-width: 560px;
+  padding: 16px 18px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 2px;
+  background: var(--ifm-background-surface-color);
+  font-size: 0.85rem;
+  line-height: 1.7;
+  overflow-x: auto;
+}
+
+.prompt {
+  color: var(--ifm-color-emphasis-600);
+  user-select: none;
+}
+
+.claims {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin: 64px 0;
+  padding: 28px 0;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.claims h2 {
+  font-size: 0.95rem;
+  margin: 0 0 6px;
+}
+
+.claims p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.docs h2 {
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+
+.docs ul {
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.9;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 700px) {
+  .page {
+    padding: 40px 18px 64px;
+  }
+
+  .title {
+    font-size: 1.9rem;
+  }
+
+  .claims {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
