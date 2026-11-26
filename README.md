@@ -49,7 +49,14 @@ Any paste can be sealed with its own passphrase — Argon2id plus XChaCha20-Poly
 
 ## Install
 
-Not yet. Later: an unsigned Windows installer, and `cargo install --git` for the CLI. The crate names `nib` and `nib-cli` are taken on crates.io, so there will be no `cargo install nib`.
+The CLI builds today:
+
+```
+cargo install --path crates/nib-cli
+echo "kubectl get pods -A" | nib
+```
+
+Windows installer and the desktop app are not built yet. The crate names `nib` and `nib-cli` are taken on crates.io, so there will be no `cargo install nib`.
 
 ## License
 
