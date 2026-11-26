@@ -83,10 +83,10 @@ CREATE TABLE pastes (
 );
 CREATE INDEX pastes_created ON pastes (created_at DESC);
 CREATE INDEX pastes_expires ON pastes (expires_at);
-CREATE VIRTUAL TABLE pastes_fts USING fts5 (body, tokenize = 'trigram');
+CREATE VIRTUAL TABLE pastes_fts USING fts5 (id UNINDEXED, body, label, tokenize = 'trigram');
 ```
 
-- **FTS is a copy table**, rowid-aligned with `pastes.rowid`, and holds only `enc = 0` rows. Copying ≤64 KB snippets costs a few MB at ten thousand pastes and buys working `snippet()`.
+- **FTS is a copy table** with an `id` column, written and removed by `nib-core` in the same call as the row. It holds the plaintext body of ordinary pastes and the plaintext label of sealed ones; a sealed body never enters it. `snippet()` therefore reads from the index, not from the store.
 - **Trigram tokenizer**, not `unicode61`: content is code, and trigram gives substring matching (`"tokio::spawn"`, `parse_args`) that `unicode61` cannot. Trade-off: queries shorter than 3 characters return nothing, and the index is larger. Revisit if it disappoints.
 - **Expiry is lazy.** Every command first runs `DELETE FROM pastes WHERE expires_at <= ?` plus the matching FTS rows. No background job, no daemon.
 - **Migrations:** `PRAGMA user_version` ladder. Version 1 creates the schema above.

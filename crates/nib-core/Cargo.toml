@@ -1,0 +1,19 @@
+[package]
+name = "nib-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lib]
+name = "nib_core"
+path = "src/lib.rs"
+
+[dependencies]
+argon2 = "0.6.0"
+base64 = "0.23.1"
+chacha20poly1305 = "0.11.0"
+dirs = "7.0.0"
+rand = "0.10.4"
+rusqlite = { version = "0.43.0", features = ["bundled"] }
+thiserror = "2.0.21"
