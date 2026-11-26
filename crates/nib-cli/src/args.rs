@@ -21,7 +21,11 @@ pub struct Cli {
 pub enum Command {
     /// Store a paste and print its id
     Add {
-        /// Read from this file instead of stdin
+        /// The paste itself: nib add "text to keep"
+        #[arg(value_name = "TEXT")]
+        text: Vec<String>,
+        /// Read the paste from this file
+        #[arg(long, short = 'f', value_name = "PATH")]
         file: Option<PathBuf>,
         /// Expire after a while: 30s, 10m, 24h, 7d
         #[arg(long)]

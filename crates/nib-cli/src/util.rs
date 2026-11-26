@@ -11,6 +11,9 @@ pub fn read_stdin() -> Result<String, String> {
     Ok(text)
 }
 
+/// Shown on stderr when the paste is typed rather than piped.
+pub const STDIN_HINT: &str = "paste or type, then press Ctrl+Z and Enter to finish\n";
+
 pub fn is_interactive() -> bool {
     io::stdin().is_terminal() && io::stdout().is_terminal()
 }

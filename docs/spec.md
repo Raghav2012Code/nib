@@ -139,10 +139,11 @@ impl Store {
 ## 6. CLI
 
 ```
-nib add [FILE] [--ttl 24h] [--secret] [--label TEXT]   # stdin when no FILE
+nib add [TEXT]... [--file PATH] [--ttl 24h] [--secret] [--label TEXT]
+                                                        # TEXT, or --file, or stdin
 nib                     # bare, with piped stdin → add
 nib ls [-n 20] [--all]
-nib get <id|prefix> [--raw]
+nib get <id|prefix>
 nib copy <id|prefix>
 nib edit <id|prefix>                                    # $EDITOR on a temp file
 nib search <query> [-n 10]

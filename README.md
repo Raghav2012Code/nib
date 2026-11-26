@@ -30,10 +30,13 @@ A native Windows app with a terminal beside it, both over one local store. Windo
 ## In the terminal
 
 ```
-echo "kubectl get pods -A" | nib   # 4f2a
+nib add "kubectl get pods -A"      # 4f2a
+echo "any text" | nib              # or pipe it in
 nib search "get pods"              # by content
 nib 4f2a > run.txt                 # byte-exact
 ```
+
+`nib add` with no text and no pipe waits for input and says how to finish it: Ctrl+Z then Enter on Windows, Ctrl+D elsewhere.
 
 `nib` alone opens a three-line launcher: add, find, recent. No full-screen TUI, no arrow keys, no modes.
 

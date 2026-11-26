@@ -88,7 +88,7 @@ fn draw(store: &Store, width: usize) -> Result<(), String> {
     let margin = pad(inner + 2, width);
     let _ = writeln!(out, "{margin}┌{}┐", "─".repeat(inner));
     for (marker, label, desc) in [
-        ("› 1", "Add a paste", "type in your editor, then save"),
+        ("› 1", "Add a paste", "paste, Ctrl+Z to finish"),
         ("  2", "Find a paste", "search the text, pick a hit"),
         ("  3", "Recent pastes", "the last ten, copy one"),
     ] {
@@ -111,7 +111,8 @@ fn draw(store: &Store, width: usize) -> Result<(), String> {
 }
 
 fn add(store: &Store) -> Result<(), String> {
-    let text = util::edit_text("")?;
+    eprint!("{}", util::STDIN_HINT);
+    let text = util::read_stdin()?;
     if text.trim().is_empty() {
         return Ok(());
     }

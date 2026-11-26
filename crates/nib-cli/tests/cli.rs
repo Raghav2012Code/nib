@@ -149,6 +149,42 @@ fn bare_id_is_shorthand_for_get() {
 }
 
 #[test]
+fn add_takes_the_text_as_arguments() {
+    let path = db("args");
+    let output = nib(&path)
+        .args(["add", "hello", "from", "argv"])
+        .output()
+        .unwrap();
+    assert!(output.status.success(), "{output:?}");
+    let id = String::from_utf8(output.stdout).unwrap().trim().to_string();
+    nib(&path)
+        .arg(&id)
+        .assert()
+        .success()
+        .stdout(predicate::eq("hello from argv"));
+}
+
+#[test]
+fn add_reads_a_file() {
+    let path = db("file");
+    let file = path.with_file_name("body.txt");
+    std::fs::write(&file, "from a file").unwrap();
+    let output = nib(&path)
+        .arg("add")
+        .arg("--file")
+        .arg(&file)
+        .output()
+        .unwrap();
+    assert!(output.status.success(), "{output:?}");
+    let id = String::from_utf8(output.stdout).unwrap().trim().to_string();
+    nib(&path)
+        .arg(&id)
+        .assert()
+        .success()
+        .stdout(predicate::eq("from a file"));
+}
+
+#[test]
 fn oversized_paste_is_refused() {
     let path = db("large");
     let body = "x".repeat(64 * 1024 + 1);

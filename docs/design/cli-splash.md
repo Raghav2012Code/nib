@@ -44,7 +44,7 @@ Design width 56 columns; everything is centred in the real width, the box spans 
 - **Tip:** the tines stop half a cell above the point, so the ember block is the lowest thing on the screen.
 - **`store` line** replaces the reference's `server` line: there is no server. It shows the resolved database path, nothing else.
 - **Menu** is a launcher over existing verbs:
-  1. `add` → `$EDITOR` on a temp file, save on close, print the ID.
+  1. `add` → reads stdin, printing `paste or type, then press Ctrl+Z and Enter to finish`, then prints the ID.
   2. `search` → `search › ` prompt, five hits with snippets, `1-5` prints, `c` copies.
   3. recent → last ten, `1-9` prints, `c` copies.
 - **Footer lists only keys that work.** `1 2 3` choose, `q` quits. No arrow keys, no redraw.
