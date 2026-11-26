@@ -5,7 +5,7 @@
 <p align="center"><b>Text lives here. Nothing leaves the machine.</b></p>
 
 <p align="center">
-  github.com/Raghav2012Code/nib: the source, the spec and the releases.<br>
+  github.com/Raghav2012Code/nib — source, spec and releases.<br>
   Liked nib? <a href="https://github.com/Raghav2012Code/nib">Star it there</a>, one click is enough.
 </p>
 
@@ -20,11 +20,11 @@ A native Windows app with a terminal beside it, both over one local store. Windo
 
 **Pre-alpha.** The design is written and the mark is drawn; there is no code yet. What follows is what the first release does, not what builds today.
 
-| <img src="assets/nib-mark.svg" width="24" alt=""> | <img src="assets/nib-mark.svg" width="24" alt=""> | <img src="assets/nib-mark.svg" width="24" alt=""> | <img src="assets/nib-mark.svg" width="24" alt=""> |
+| <img src="assets/nib-appicon.svg" width="26" alt=""> | <img src="assets/nib-appicon.svg" width="26" alt=""> | <img src="assets/nib-appicon.svg" width="26" alt=""> | <img src="assets/nib-appicon.svg" width="26" alt=""> |
 |:---:|:---:|:---:|:---:|
-| **Local only** | **Searchable** | **Shared by file** | **Open** |
-| 0 bytes uploaded | Text, not just titles | Export one paste | MIT license |
-| The whole store is one SQLite file on your disk | FTS5 over every paste, matches shown as snippets | No links, no relay, no service in the middle | Source, spec and design decisions in the repo |
+| **Local only** | **Searchable** | **Sent by file** | **Open** |
+| 0 bytes uploaded | Content, not titles | One file per export | MIT license |
+| One SQLite file on your disk | FTS5 over every paste, snippets too | No link, no relay, no service | Source, spec and design in the repo |
 
 ## In the terminal
 
