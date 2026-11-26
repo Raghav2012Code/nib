@@ -2236,7 +2236,7 @@ checksum = "650eef8c711430f1a879fdd01d4745a7deea475becfb90269c06775983bbf086"
 
 [[package]]
 name = "nib-app"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "arboard",
  "nib-core",
@@ -2249,7 +2249,7 @@ dependencies = [
 
 [[package]]
 name = "nib-core"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "argon2",
  "base64 0.23.1",

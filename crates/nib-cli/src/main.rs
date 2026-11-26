@@ -48,6 +48,9 @@ fn run(cli: Cli) -> Result<(), String> {
             let body = match file {
                 Some(path) => std::fs::read_to_string(&path)
                     .map_err(|e| format!("cannot read {}: {e}", path.display()))?,
+                // A terminal has no end-of-input to wait for, so open the
+                // editor. Piped input keeps the old behaviour.
+                None if io::stdin().is_terminal() => util::edit_text("")?,
                 None => util::read_stdin()?,
             };
             if body.trim().is_empty() {
