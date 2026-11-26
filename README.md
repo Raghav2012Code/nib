@@ -19,7 +19,7 @@
 
 A native Windows app with a terminal beside it, both over one local store. Windows 10 and 11 first. Plain text, up to 64 KB a paste.
 
-**Pre-alpha.** The CLI and the window both build and run; there is no installer yet. CI runs the tests on Windows and Ubuntu, and builds the app on Windows.
+**Pre-alpha.** 0.1.0 ships the CLI and the window; nothing is code-signed yet.
 
 ## What it is
 
@@ -58,22 +58,21 @@ The same pages are published at **https://raghav2012code.github.io/nib/** — bu
 
 ## Install
 
-The CLI builds today:
+Download from [releases](https://github.com/Raghav2012Code/nib/releases):
+
+- **The window** — `nib_0.1.0_x64-setup.exe`. Current-user install, no admin. Unsigned, so SmartScreen warns: "More info", then "Run anyway".
+- **The terminal** — `nib.exe`, portable. Drop it anywhere on your `PATH`.
+
+The installer does not touch your `PATH`; that is deliberate.
+
+From source:
 
 ```
 cargo install --path crates/nib-cli
-echo "kubectl get pods -A" | nib
+cd app && npm install && npm run tauri dev
 ```
 
-The app runs from source:
-
-```
-cd app
-npm install
-npm run tauri dev
-```
-
-A Windows installer and a release build are not published yet. The crate names `nib` and `nib-cli` are taken on crates.io, so there will be no `cargo install nib`.
+The crate names `nib` and `nib-cli` are taken on crates.io, so there will be no `cargo install nib`.
 
 ## License
 

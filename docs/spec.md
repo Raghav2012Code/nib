@@ -189,7 +189,7 @@ One accent only, used for the ID, the cursor and focus rings. Type: `JetBrains M
 
 - `cargo install --path crates/nib-cli` for early users; `nib.exe` alone is portable.
 - Local builds use the MSVC toolchain: `rustup default stable-x86_64-pc-windows-msvc`, with VS Build Tools (C++ workload) installed. This is required by `rusqlite`'s bundled SQLite and by Tauri; the GNU target is not supported by Tauri on Windows.
-- Later: a Tauri NSIS installer containing both binaries, unsigned. Expect a SmartScreen warning; say so in the README rather than fight it.
+- The Tauri NSIS installer installs the **app** for the current user, unsigned. The CLI ships beside it as a portable `nib.exe` release asset rather than inside the installer: adding a directory to a user's `PATH` from an NSIS script is the one place an installer can quietly corrupt a machine, and a pre-alpha does not earn that risk. Expect a SmartScreen warning; the README says so rather than fighting it.
 - Windows 10/11 with WebView2 (present on current builds). Code stays portable — no Windows-only APIs in `nib-core` — but macOS and Linux are untested in v1 and unclaimed.
 
 ## 10. Testing

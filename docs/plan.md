@@ -68,7 +68,9 @@ Not verified by me: the native window's own pixels — a desktop screenshot capt
 
 **Done when:** the installer installs on a clean Windows install and `nib` works from a fresh PowerShell.
 
-**Remaining:** steps 2 and 3. The installer has not been built once, so treat `npm run tauri build` as untested territory.
+**Remaining:** steps 2 and 3.
+
+**Done 2026-11-26.** `npm run tauri build` produced `nib_0.1.0_x64-setup.exe` (2.09 MiB, NSIS, current-user, unsigned); `cargo build --release -p nib-cli` produced a portable `nib.exe` (2.64 MiB). Both were started and checked: the CLI stored and read back a paste, the release window opened with the title `nib`. The installer is attached to the `v0.1.0` release together with `nib.exe`, because installing a directory into a user's `PATH` from NSIS is the one place an installer can quietly break a machine, and a pre-alpha does not earn that risk.
 
 ## Order and why
 
