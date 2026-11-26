@@ -10,6 +10,7 @@ Nib is an offline pastebin: one SQLite store, a CLI (`nib`) and a Tauri window o
 | `crates/nib-cli/` | `bin nib`. Verbs, stream rules, splash. |
 | `app/` | Tauri 2 + Vite + plain TypeScript. `src-tauri` is excluded from the root workspace. |
 | `app/src/mock.ts` | Dev-only IPC stand-in so the UI runs in a browser. Must never ship. |
+| `site/` | Docusaurus. Its docs plugin points at `../docs`, so the spec has one copy. |
 | `assets/` | Mark SVGs. `docs/design/` explains them. |
 | `docs/spec.md` | Behaviour contract. `docs/plan.md` tracks phases. |
 
@@ -23,6 +24,7 @@ cargo install --path crates/nib-cli
 cd app; npm run tauri dev        # the window
 cd app; npm run build            # tsc + vite, must pass before any app commit
 cargo check --manifest-path app/src-tauri/Cargo.toml
+cd site; npm run build           # the docs site, same Markdown as docs/
 ```
 
 `NIB_DB` overrides the store path (use a temp file in every manual check, never the real `%APPDATA%\nib\nib.db`). `NIB_PASSPHRASE` supplies a passphrase when there is no terminal.
@@ -63,7 +65,7 @@ cargo check --manifest-path app/src-tauri/Cargo.toml
 
 ## Do not commit
 
-`target/`, `node_modules/`, `dist/`, `*.db*`, `.openchamber/`, `.playwright-mcp/`, or anything from a real store.
+`target/`, `node_modules/`, `dist/`, `build/`, `site/build/`, `site/static/img/` (generated from `assets/`), `*.db*`, `.openchamber/`, `.playwright-mcp/`, root-level `*.png`, or anything from a real store.
 
 ## Before a release
 

@@ -10,8 +10,8 @@
 </p>
 
 <p align="center">
-  <a href="docs/spec.md"><img src="https://img.shields.io/badge/read-the%20spec-3d5e80?style=flat-square" alt="Read the spec"></a>
-  <a href="docs/design/cli-splash.md"><img src="https://img.shields.io/badge/see-the%20terminal-b4531f?style=flat-square" alt="See the terminal"></a>
+  <a href="https://raghav2012code.github.io/nib/"><img src="https://img.shields.io/badge/docs-read%20the%20spec-b4531f?style=flat-square" alt="Docs"></a>
+  <a href="docs/spec.md"><img src="https://img.shields.io/badge/spec-in%20the%20repo-3d5e80?style=flat-square" alt="Spec in the repo"></a>
   <a href="https://github.com/Raghav2012Code/nib/actions/workflows/ci.yml"><img src="https://github.com/Raghav2012Code/nib/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/status-pre--alpha-8f8d87?style=flat-square" alt="Pre-alpha">
   <img src="https://img.shields.io/badge/license-MIT-3d5e80?style=flat-square" alt="MIT">
@@ -46,6 +46,8 @@ Two panes: the list on the left, the selected paste on the right. `/` searches, 
 Any paste can be sealed with its own passphrase — Argon2id plus XChaCha20-Poly1305. A sealed paste is never indexed, so search cannot leak it, and its label is the only thing stored in the clear.
 
 ## Docs
+
+The same pages are published at **https://raghav2012code.github.io/nib/** — built from the Markdown in `docs/`, not a copy of it.
 
 - [Design spec](docs/spec.md) — scope, data model, CLI surface, app, packaging
 - [Plan](docs/plan.md) — phases and what each one proved
