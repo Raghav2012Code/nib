@@ -16,13 +16,13 @@ Design width 56 columns; everything is centred in the real width, the box spans 
                           ▄███▄
                         ▄███████▄
                         █████████
+                        █████████
+                        █████████
+                        ████▀████
                         ████ ████
-                        ████ ████
-                        ▀███ ███▀
                          ███ ███
                           ██ ██
-                          ▀▀ ▀▀
-                            █
+                          ▀▀▄▀▀
 
                           n i b
 
@@ -40,8 +40,8 @@ Design width 56 columns; everything is centred in the real width, the box spans 
                   1-3 choose  ·  q quit
 ```
 
-- **Mark:** the nib from `docs/design/logo.md` and `assets/nib-cli.svg`, 9×10 cells of half-block pixels, flat ember, hole and slit cut out. Below it `n i b` in bold, letter-spaced. The mark is the logo; the wordmark names it.
-- **Tip:** the point is one cell below the tines, so the nib ends in a point and not a bar.
+- **Mark:** the nib from `docs/design/logo.md` and `assets/nib-cli.svg`: 9×10 cells, steel ramp top to bottom, one ember cell at the point. Below it `n i b` in bold, letter-spaced. The mark is the logo; the wordmark names it.
+- **Tip:** the tines stop half a cell above the point, so the ember block is the lowest thing on the screen.
 - **`store` line** replaces the reference's `server` line: there is no server. It shows the resolved database path, nothing else.
 - **Menu** is a launcher over existing verbs:
   1. `add` → `$EDITOR` on a temp file, save on close, print the ID.
@@ -54,12 +54,12 @@ Design width 56 columns; everything is centred in the real width, the box spans 
 
 | Situation | Mark | Body |
 |---|---|---|
-| truecolor TTY | flat `#e07a45`, no ramp | `n i b` in `#e8e6e1` bold; `·`, `store`, footer in `#8f8d87` |
-| 256-colour TTY | nearest to `#e07a45` | same, nearest match |
+| truecolor TTY | steel ramp, one colour per row; point `#e07a45` | `n i b` in `#e8e6e1` bold; `·`, `store`, footer in `#8f8d87` |
+| 256-colour TTY | nearest colour per row, same order | same, nearest match |
 | `NO_COLOR` set | plain, `n i b` bold | plain |
 | terminal under 60×24 | `nib` in one line, no mark, no box | one usage line |
 
-The mark is one flat colour, the same ember as the app icon. The `›` and the menu numbers carry the same accent. Nothing else is coloured.
+The mark is the only place the ramp appears; the point is the only warm pixel. The `›` and the menu numbers carry the same ember. Nothing else is coloured.
 
 ## Rules for implementation
 

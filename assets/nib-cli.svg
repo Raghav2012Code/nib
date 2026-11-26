@@ -1,10 +1,145 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="nib">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 198 440" width="198" height="440" role="img" aria-label="nib">
   <defs>
-    <mask id="nib-cli-cut" maskUnits="userSpaceOnUse" x="0" y="0" width="64" height="64">
-      <rect width="64" height="64" fill="#fff"/>
-      <circle cx="32" cy="22" r="3.2" fill="#000"/>
-      <rect x="30.8" y="25" width="2.4" height="39" fill="#000"/>
-    </mask>
+  <linearGradient id="steel" x1="0" y1="0" x2="0" y2="440" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#d7ecfe"/><stop offset="0.1" stop-color="#bcdcf7"/><stop offset="0.2" stop-color="#a6c9ec"/><stop offset="0.3" stop-color="#93b7dd"/><stop offset="0.4" stop-color="#82a8ce"/><stop offset="0.5" stop-color="#7199bf"/><stop offset="0.6" stop-color="#628bb0"/><stop offset="0.8" stop-color="#547da2"/><stop offset="0.9" stop-color="#487094"/><stop offset="1" stop-color="#3d5e80"/>
+  </linearGradient>
   </defs>
-  <path mask="url(#nib-cli-cut)" fill="#e07a45" d="M32 2C41.5 2 47 9.5 47 20v14L32 62 17 34V20C17 9.5 22.5 2 32 2Z"/>
+  <g>
+    <rect x="66" y="0" width="21" height="21" fill="url(#steel)"/>
+    <rect x="88" y="0" width="21" height="21" fill="url(#steel)"/>
+    <rect x="110" y="0" width="21" height="21" fill="url(#steel)"/>
+    <rect x="44" y="22" width="21" height="21" fill="url(#steel)"/>
+    <rect x="66" y="22" width="21" height="21" fill="url(#steel)"/>
+    <rect x="88" y="22" width="21" height="21" fill="url(#steel)"/>
+    <rect x="110" y="22" width="21" height="21" fill="url(#steel)"/>
+    <rect x="132" y="22" width="21" height="21" fill="url(#steel)"/>
+    <rect x="22" y="44" width="21" height="21" fill="url(#steel)"/>
+    <rect x="44" y="44" width="21" height="21" fill="url(#steel)"/>
+    <rect x="66" y="44" width="21" height="21" fill="url(#steel)"/>
+    <rect x="88" y="44" width="21" height="21" fill="url(#steel)"/>
+    <rect x="110" y="44" width="21" height="21" fill="url(#steel)"/>
+    <rect x="132" y="44" width="21" height="21" fill="url(#steel)"/>
+    <rect x="154" y="44" width="21" height="21" fill="url(#steel)"/>
+    <rect x="0" y="66" width="21" height="21" fill="url(#steel)"/>
+    <rect x="22" y="66" width="21" height="21" fill="url(#steel)"/>
+    <rect x="44" y="66" width="21" height="21" fill="url(#steel)"/>
+    <rect x="66" y="66" width="21" height="21" fill="url(#steel)"/>
+    <rect x="88" y="66" width="21" height="21" fill="url(#steel)"/>
+    <rect x="110" y="66" width="21" height="21" fill="url(#steel)"/>
+    <rect x="132" y="66" width="21" height="21" fill="url(#steel)"/>
+    <rect x="154" y="66" width="21" height="21" fill="url(#steel)"/>
+    <rect x="176" y="66" width="21" height="21" fill="url(#steel)"/>
+    <rect x="0" y="88" width="21" height="21" fill="url(#steel)"/>
+    <rect x="22" y="88" width="21" height="21" fill="url(#steel)"/>
+    <rect x="44" y="88" width="21" height="21" fill="url(#steel)"/>
+    <rect x="66" y="88" width="21" height="21" fill="url(#steel)"/>
+    <rect x="88" y="88" width="21" height="21" fill="url(#steel)"/>
+    <rect x="110" y="88" width="21" height="21" fill="url(#steel)"/>
+    <rect x="132" y="88" width="21" height="21" fill="url(#steel)"/>
+    <rect x="154" y="88" width="21" height="21" fill="url(#steel)"/>
+    <rect x="176" y="88" width="21" height="21" fill="url(#steel)"/>
+    <rect x="0" y="110" width="21" height="21" fill="url(#steel)"/>
+    <rect x="22" y="110" width="21" height="21" fill="url(#steel)"/>
+    <rect x="44" y="110" width="21" height="21" fill="url(#steel)"/>
+    <rect x="66" y="110" width="21" height="21" fill="url(#steel)"/>
+    <rect x="88" y="110" width="21" height="21" fill="url(#steel)"/>
+    <rect x="110" y="110" width="21" height="21" fill="url(#steel)"/>
+    <rect x="132" y="110" width="21" height="21" fill="url(#steel)"/>
+    <rect x="154" y="110" width="21" height="21" fill="url(#steel)"/>
+    <rect x="176" y="110" width="21" height="21" fill="url(#steel)"/>
+    <rect x="0" y="132" width="21" height="21" fill="url(#steel)"/>
+    <rect x="22" y="132" width="21" height="21" fill="url(#steel)"/>
+    <rect x="44" y="132" width="21" height="21" fill="url(#steel)"/>
+    <rect x="66" y="132" width="21" height="21" fill="url(#steel)"/>
+    <rect x="88" y="132" width="21" height="21" fill="url(#steel)"/>
+    <rect x="110" y="132" width="21" height="21" fill="url(#steel)"/>
+    <rect x="132" y="132" width="21" height="21" fill="url(#steel)"/>
+    <rect x="154" y="132" width="21" height="21" fill="url(#steel)"/>
+    <rect x="176" y="132" width="21" height="21" fill="url(#steel)"/>
+    <rect x="0" y="154" width="21" height="21" fill="url(#steel)"/>
+    <rect x="22" y="154" width="21" height="21" fill="url(#steel)"/>
+    <rect x="44" y="154" width="21" height="21" fill="url(#steel)"/>
+    <rect x="66" y="154" width="21" height="21" fill="url(#steel)"/>
+    <rect x="88" y="154" width="21" height="21" fill="url(#steel)"/>
+    <rect x="110" y="154" width="21" height="21" fill="url(#steel)"/>
+    <rect x="132" y="154" width="21" height="21" fill="url(#steel)"/>
+    <rect x="154" y="154" width="21" height="21" fill="url(#steel)"/>
+    <rect x="176" y="154" width="21" height="21" fill="url(#steel)"/>
+    <rect x="0" y="176" width="21" height="21" fill="url(#steel)"/>
+    <rect x="22" y="176" width="21" height="21" fill="url(#steel)"/>
+    <rect x="44" y="176" width="21" height="21" fill="url(#steel)"/>
+    <rect x="66" y="176" width="21" height="21" fill="url(#steel)"/>
+    <rect x="88" y="176" width="21" height="21" fill="url(#steel)"/>
+    <rect x="110" y="176" width="21" height="21" fill="url(#steel)"/>
+    <rect x="132" y="176" width="21" height="21" fill="url(#steel)"/>
+    <rect x="154" y="176" width="21" height="21" fill="url(#steel)"/>
+    <rect x="176" y="176" width="21" height="21" fill="url(#steel)"/>
+    <rect x="0" y="198" width="21" height="21" fill="url(#steel)"/>
+    <rect x="22" y="198" width="21" height="21" fill="url(#steel)"/>
+    <rect x="44" y="198" width="21" height="21" fill="url(#steel)"/>
+    <rect x="66" y="198" width="21" height="21" fill="url(#steel)"/>
+    <rect x="88" y="198" width="21" height="21" fill="url(#steel)"/>
+    <rect x="110" y="198" width="21" height="21" fill="url(#steel)"/>
+    <rect x="132" y="198" width="21" height="21" fill="url(#steel)"/>
+    <rect x="154" y="198" width="21" height="21" fill="url(#steel)"/>
+    <rect x="176" y="198" width="21" height="21" fill="url(#steel)"/>
+    <rect x="0" y="220" width="21" height="21" fill="url(#steel)"/>
+    <rect x="22" y="220" width="21" height="21" fill="url(#steel)"/>
+    <rect x="44" y="220" width="21" height="21" fill="url(#steel)"/>
+    <rect x="66" y="220" width="21" height="21" fill="url(#steel)"/>
+    <rect x="88" y="220" width="21" height="21" fill="url(#steel)"/>
+    <rect x="110" y="220" width="21" height="21" fill="url(#steel)"/>
+    <rect x="132" y="220" width="21" height="21" fill="url(#steel)"/>
+    <rect x="154" y="220" width="21" height="21" fill="url(#steel)"/>
+    <rect x="176" y="220" width="21" height="21" fill="url(#steel)"/>
+    <rect x="0" y="242" width="21" height="21" fill="url(#steel)"/>
+    <rect x="22" y="242" width="21" height="21" fill="url(#steel)"/>
+    <rect x="44" y="242" width="21" height="21" fill="url(#steel)"/>
+    <rect x="66" y="242" width="21" height="21" fill="url(#steel)"/>
+    <rect x="110" y="242" width="21" height="21" fill="url(#steel)"/>
+    <rect x="132" y="242" width="21" height="21" fill="url(#steel)"/>
+    <rect x="154" y="242" width="21" height="21" fill="url(#steel)"/>
+    <rect x="176" y="242" width="21" height="21" fill="url(#steel)"/>
+    <rect x="0" y="264" width="21" height="21" fill="url(#steel)"/>
+    <rect x="22" y="264" width="21" height="21" fill="url(#steel)"/>
+    <rect x="44" y="264" width="21" height="21" fill="url(#steel)"/>
+    <rect x="66" y="264" width="21" height="21" fill="url(#steel)"/>
+    <rect x="110" y="264" width="21" height="21" fill="url(#steel)"/>
+    <rect x="132" y="264" width="21" height="21" fill="url(#steel)"/>
+    <rect x="154" y="264" width="21" height="21" fill="url(#steel)"/>
+    <rect x="176" y="264" width="21" height="21" fill="url(#steel)"/>
+    <rect x="0" y="286" width="21" height="21" fill="url(#steel)"/>
+    <rect x="22" y="286" width="21" height="21" fill="url(#steel)"/>
+    <rect x="44" y="286" width="21" height="21" fill="url(#steel)"/>
+    <rect x="66" y="286" width="21" height="21" fill="url(#steel)"/>
+    <rect x="110" y="286" width="21" height="21" fill="url(#steel)"/>
+    <rect x="132" y="286" width="21" height="21" fill="url(#steel)"/>
+    <rect x="154" y="286" width="21" height="21" fill="url(#steel)"/>
+    <rect x="176" y="286" width="21" height="21" fill="url(#steel)"/>
+    <rect x="22" y="308" width="21" height="21" fill="url(#steel)"/>
+    <rect x="44" y="308" width="21" height="21" fill="url(#steel)"/>
+    <rect x="66" y="308" width="21" height="21" fill="url(#steel)"/>
+    <rect x="110" y="308" width="21" height="21" fill="url(#steel)"/>
+    <rect x="132" y="308" width="21" height="21" fill="url(#steel)"/>
+    <rect x="154" y="308" width="21" height="21" fill="url(#steel)"/>
+    <rect x="22" y="330" width="21" height="21" fill="url(#steel)"/>
+    <rect x="44" y="330" width="21" height="21" fill="url(#steel)"/>
+    <rect x="66" y="330" width="21" height="21" fill="url(#steel)"/>
+    <rect x="110" y="330" width="21" height="21" fill="url(#steel)"/>
+    <rect x="132" y="330" width="21" height="21" fill="url(#steel)"/>
+    <rect x="154" y="330" width="21" height="21" fill="url(#steel)"/>
+    <rect x="44" y="352" width="21" height="21" fill="url(#steel)"/>
+    <rect x="66" y="352" width="21" height="21" fill="url(#steel)"/>
+    <rect x="110" y="352" width="21" height="21" fill="url(#steel)"/>
+    <rect x="132" y="352" width="21" height="21" fill="url(#steel)"/>
+    <rect x="44" y="374" width="21" height="21" fill="url(#steel)"/>
+    <rect x="66" y="374" width="21" height="21" fill="url(#steel)"/>
+    <rect x="110" y="374" width="21" height="21" fill="url(#steel)"/>
+    <rect x="132" y="374" width="21" height="21" fill="url(#steel)"/>
+    <rect x="44" y="396" width="21" height="21" fill="url(#steel)"/>
+    <rect x="66" y="396" width="21" height="21" fill="url(#steel)"/>
+    <rect x="110" y="396" width="21" height="21" fill="url(#steel)"/>
+    <rect x="132" y="396" width="21" height="21" fill="url(#steel)"/>
+    <rect x="88" y="418" width="21" height="21" fill="#e07a45"/>
+  </g>
 </svg>
