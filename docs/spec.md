@@ -175,7 +175,7 @@ Terminal-native: the window is a terminal that got wider. No cards, no shadows, 
 
 One accent only, used for the ID, the cursor and focus rings. Type: `JetBrains Mono` with `ui-monospace, Cascadia Code, Consolas` fallback, 13px UI / 13px content, 1.5 line height, 28px list rows, hairline 1px separators, 16/24px padding. The CLI uses the same accent via 256-colour nearest match.
 
-**Logo.** A fountain-pen nib: a smooth teardrop with a breather hole and a slit, ember on a near-black tile. Sources, all present in `assets/`: `nib-mark.svg` (currentColor, for the app and docs), `nib-appicon.svg` (512×512 app icon), `nib-wordmark.svg` (stroke-drawn `nib` wordmark). The terminal renders the same silhouette in half-block cells — `docs/design/logo.md`. No badge, no swoosh, no outline, no shadow.
+**Logo.** A fountain-pen nib: rounded bulb, breather hole, slit down to a sharp point, one flat ember `#e07a45` on near-black. Sources, all present in `assets/`: `nib-cli.svg` (ember, transparent, the CLI mark), `nib-mark.svg` (currentColor), `nib-appicon.svg` (512×512 app icon on a `#141413` tile), `nib-wordmark.svg` (stroke-drawn `nib`). The terminal renders the same silhouette in half-block cells — `docs/design/logo.md`. Same outline in all of them. No badge, no swoosh, no outline, no shadow.
 
 ## 9. Packaging
 

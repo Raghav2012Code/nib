@@ -1,60 +1,55 @@
 # Nib — CLI mark
 
-A fountain-pen nib drawn directly in half-block cells: 7 columns × 8 rows, each cell holding two square pixels (`▀ ▄ █`). The strings below are the mark; nothing is merged at runtime.
+The CLI logo is the same nib as the app icon: a rounded bulb, a breather hole, a slit down to a sharp point, one flat ember. Terminal version is half-block cells; SVG version is `assets/nib-cli.svg`.
 
 ## Mark
 
 ```
- ▄███▄
-███████
-███████
-███████
- ██ ██
- ██ ██
-  █▄█
-   ▀
+  ▄███▄
+▄███████▄
+█████████
+████ ████
+████ ████
+▀███ ███▀
+ ███ ███
+  ██ ██
+  ▀▀ ▀▀
+    █
 ```
 
-- The crown is a half-block dome; the body runs full width for three rows, then the tines step in.
-- The last two rows are the point. The tines end in a `▄` gap, and one `▀` sits centred in the row below it: a single ember pixel that sticks out half a cell past the tines, so the nib comes to a real point instead of a flat end.
-- No breather hole. At this width it reads as a dent; the slit carries the shape.
-
-## Size
-
-7 columns × 8 rows: narrower than the first draft, and the only cell that hangs below the body is the point itself.
+9 columns × 10 rows, each cell two square pixels (`▀ ▄ █`). The gap from row 4 down is the slit; the first gap cell is the breather hole. The last row is the point, one cell wide, sitting below the tines.
 
 ## Colour
 
-| Row | Colour | Role |
+One colour: `#e07a45` on `#141413`. No ramp, no gradient.
+
+The earlier steel ramp is gone. The icon is flat ember and the terminal mark now matches it, so the two are the same logo rather than two takes on it. The dark background does the shading.
+
+| Situation | Mark | Body |
 |---|---|---|
-| 0 | `#d7ecfe` | crown |
-| 1 | `#bcdcf7` | body |
-| 2 | `#a2c6ea` | body |
-| 3 | `#8fb3d9` | body |
-| 4 | `#7aa1c8` | tines |
-| 5 | `#6a8fb5` | tines |
-| 6 | `#4f7299` tines, `#e07a45` gap | tines + point |
-| 7 | `#e07a45` | point, protruding |
+| truecolor TTY | `#e07a45` | `·`, `store`, footer in `#8f8d87` |
+| 256-colour TTY | nearest to `#e07a45` | same, nearest match |
+| `NO_COLOR` set | plain `█ ▀ ▄`, no colour | plain |
+| terminal under 60×24 | `nib` in one line, no mark | one usage line |
 
-Six cells of steel, then ember at the writing point. The protruding cell is the sharpest pixel in the mark, which is why it is the one that is orange.
-
-## Lockup
-
-Mark centred, `n i b` in bold one row below the point, one cell of tracking, `#e8e6e1`, then the tagline in muted ink. The mark carries the weight; the wordmark only names it.
-
-## Assets
-
-The terminal mark and the SVG marks are the same silhouette:
+## Files
 
 | File | Use |
 |---|---|
-| `assets/nib-mark.svg` | currentColor mark for the app window, docs, README |
-| `assets/nib-appicon.svg` | 512×512 app icon, ember on `#141413` |
+| `assets/nib-cli.svg` | the CLI mark, ember, transparent background |
+| `assets/nib-mark.svg` | currentColor mark, inherits text colour |
+| `assets/nib-appicon.svg` | 512×512 app icon, ember on a `#141413` tile |
 | `assets/nib-wordmark.svg` | stroke-drawn `nib`, for wide lockups |
+
+`nib-cli.svg`, `nib-mark.svg` and `nib-appicon.svg` share one outline; only the fill and the tile differ.
+
+## Lockup
+
+Mark centred, `n i b` in bold one row below it, one cell of tracking, `#e8e6e1`, then the tagline in muted ink. The mark carries the weight; the wordmark only names it.
 
 ## Rules
 
-- Never recolour a row wholesale; the ramp is the mark, and the last two rows are two colours by design.
+- One colour. Do not reintroduce a ramp, an outline or a highlight.
 - Below 60×24 the mark is dropped and the splash prints `nib` alone.
-- `NO_COLOR`: plain half-blocks, no colour; the point still reads because it is geometry, not colour.
-- Desktop app uses `assets/nib-mark.svg`, the same silhouette with smooth curves, never this grid.
+- `NO_COLOR` keeps the shape; the point is geometry, not colour.
+- The desktop app uses the SVG, never this grid.
