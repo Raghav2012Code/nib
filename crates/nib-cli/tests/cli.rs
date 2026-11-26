@@ -132,6 +132,23 @@ fn rm_needs_force_when_there_is_no_terminal() {
 }
 
 #[test]
+fn bare_id_is_shorthand_for_get() {
+    let path = db("short");
+    let body = "shorthand body";
+    let id = add(&path, body);
+    nib(&path)
+        .arg(&id)
+        .assert()
+        .success()
+        .stdout(predicate::eq(body.as_bytes()));
+    nib(&path)
+        .arg(&id[..2])
+        .assert()
+        .success()
+        .stdout(predicate::eq(body.as_bytes()));
+}
+
+#[test]
 fn oversized_paste_is_refused() {
     let path = db("large");
     let body = "x".repeat(64 * 1024 + 1);

@@ -10,6 +10,9 @@ use clap::{Parser, Subcommand};
     args_conflicts_with_subcommands = true
 )]
 pub struct Cli {
+    /// Paste id or prefix, shorthand for `nib get`
+    pub id: Option<String>,
+
     #[command(subcommand)]
     pub command: Option<Command>,
 }

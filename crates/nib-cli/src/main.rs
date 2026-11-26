@@ -29,6 +29,11 @@ fn open() -> Result<Store, String> {
 
 fn run(cli: Cli) -> Result<(), String> {
     let Some(command) = cli.command else {
+        if let Some(id) = cli.id {
+            let store = open()?;
+            let text = read_paste(&store, &id)?;
+            return write_out(&text);
+        }
         return bare();
     };
     let store = open()?;

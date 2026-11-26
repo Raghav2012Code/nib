@@ -12,6 +12,8 @@ The machine currently has `stable-x86_64-pc-windows-gnu` and no `cl.exe`. Both t
 
 **Done when:** `cargo build` and the SQLite smoke test pass on the MSVC toolchain. If this fails, the rest is blocked and the pure-Rust store becomes the fallback — decide then, not later.
 
+**Done 2026-11-26.** Build Tools 2022 installed with the C++ workload and Windows SDK 10.0.26100; `rustup default stable-x86_64-pc-windows-msvc`; SQLite compiles and the full suite is green. One trap worth remembering: while the SDK was still installing, every link failed with `LNK1181: cannot open input file 'dbghelp.lib'`. That is an incomplete SDK, not a broken toolchain — wait for `Windows Kits\10\Lib\<version>\um\x64\dbghelp.lib` to exist.
+
 ## Phase 1 — core
 
 Files: `Cargo.toml` (workspace), `crates/nib-core/{Cargo.toml, src/{lib,store,ids,crypto,error}.rs}`.
