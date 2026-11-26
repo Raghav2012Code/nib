@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="nib">
+  <defs>
+    <mask id="cut" maskUnits="userSpaceOnUse" x="0" y="0" width="64" height="64">
+      <rect width="64" height="64" fill="#fff"/>
+      <circle cx="32" cy="22" r="3.2" fill="#000"/>
+      <rect x="30.8" y="25" width="2.4" height="39" fill="#000"/>
+    </mask>
+  </defs>
+  <path mask="url(#cut)" fill="currentColor" d="M32 2C41.5 2 47 9.5 47 20v14L32 62 17 34V20C17 9.5 22.5 2 32 2Z"/>
+</svg>

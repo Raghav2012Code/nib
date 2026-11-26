@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 136 84" role="img" aria-label="nib">
+  <g fill="none" stroke="currentColor" stroke-width="8">
+    <path d="M12 76V50c0-14 8-18 20-18s20 4 20 18v26"/>
+    <path d="M102 4v72"/>
+    <circle cx="122" cy="52" r="20"/>
+  </g>
+  <line x1="76" y1="28" x2="76" y2="76" stroke="currentColor" stroke-width="8"/>
+  <circle cx="76" cy="14" r="5" fill="currentColor"/>
+</svg>
