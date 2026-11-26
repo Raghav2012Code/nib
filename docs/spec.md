@@ -1,6 +1,6 @@
 # Nib — design spec
 
-**Status:** draft for review · **Date:** 2026-11-26
+**Status:** implemented in 0.1.0 · **Date:** 2026-11-26
 
 ## 1. What it is
 
@@ -19,6 +19,8 @@ Nib is an offline pastebin: one local store for text snippets, reached from a te
 5. A paste marked secret cannot be read from the database file without its passphrase.
 6. `nib` alone in a terminal shows the splash, and reaching a new paste costs two keystrokes.
 7. Both surfaces look like one product.
+
+**State.** Criteria 1, 3, 4, 5 and 7 are covered by tests and by a manual pass. Criterion 2 is designed for (`trigram`, indexed) but unmeasured at 10,000 pastes. Criterion 6 is implemented but its splash has not been run in a real terminal by the author of the code — it is the one thing left to eyeball.
 
 ## 2. Decisions locked
 

@@ -63,6 +63,8 @@ The mark is the only place the ramp appears; the point is the only warm pixel. T
 
 ## Rules for implementation
 
+- Implemented in `crates/nib-cli/src/splash.rs` (`MARK`, `ROWS`, `draw`). Not yet eyeballed in a real terminal; the layout is arithmetic, not eyeballed.
+
 - Hand-written ANSI strings; `crossterm` only for raw mode and a single key read.
 - No `ratatui`, no alternate screen, no layout framework. The screen is about 20 lines of `println!`.
 - Glyphs used: `█ ▀ ▄` (U+2588, U+2580, U+2584) for the mark, `›`, `·`, `┌ ─ ┐ │ └ ┘`. All are standard in Windows Terminal, ConPTY and common Linux/macOS terminals.

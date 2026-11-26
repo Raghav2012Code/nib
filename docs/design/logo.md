@@ -62,3 +62,5 @@ Mark centred, `n i b` in bold one row below it, one cell of tracking, `#e8e6e1`,
 - On a light surface use the tile, never `nib-cli.svg`.
 - Below 60×24 the splash drops the mark and prints `nib` alone.
 - `NO_COLOR` keeps the shape; the point is geometry, not colour.
+
+Implemented in `crates/nib-cli/src/splash.rs` (terminal) and `assets/*.svg` (everywhere else).

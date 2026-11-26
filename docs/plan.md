@@ -62,11 +62,13 @@ Not verified by me: the native window's own pixels — a desktop screenshot capt
 
 ## Phase 4 — ship
 
-1. CI workflow: `fmt --check`, `clippy -D warnings`, `test` on `windows-latest` and `ubuntu-latest`.
+1. CI workflow: `fmt --check`, `clippy -D warnings`, `test` on `windows-latest` and `ubuntu-latest`. **Done**, plus a third job that installs the app, builds the frontend with `tsc` and checks the Tauri crate on Windows.
 2. `tauri build` NSIS installer containing both binaries, unsigned; README notes the SmartScreen warning.
 3. Tag `v0.1.0`; release notes list what works and what is deliberately missing.
 
 **Done when:** the installer installs on a clean Windows install and `nib` works from a fresh PowerShell.
+
+**Remaining:** steps 2 and 3. The installer has not been built once, so treat `npm run tauri build` as untested territory.
 
 ## Order and why
 
