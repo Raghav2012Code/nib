@@ -29,7 +29,7 @@ Nib is an offline pastebin: one local store for text snippets, reached from a te
 | Paste shape | Plain text only. No title, tag, folder, file or image. |
 | Size | ≤ 64 KB. Reject larger with a clear error. |
 | Lifetime | Lives until deleted. Optional per-paste expiry. |
-| Search | Full-text over content with snippets, plus unique-prefix match on ID. |
+| Search | Full-text over content with snippets (trigram tokenizer), plus unique-prefix match on ID. |
 | Versions | None. Edit replaces. |
 | Secrets | Per-paste passphrase; optional plaintext label. |
 | Store | One SQLite file, FTS5, WAL. |
@@ -40,6 +40,9 @@ Nib is an offline pastebin: one local store for text snippets, reached from a te
 | GUI | Tauri (Rust core + web UI), two-pane list + preview. |
 | Capture in app | In-app only. No tray, no global hotkey. |
 | Packaging | Two binaries over one core; unsigned installer. |
+| Toolchain | MSVC (`stable-x86_64-pc-windows-msvc`) plus VS Build Tools. GNU is not used. |
+| App UI | Plain HTML/CSS/TS through Vite. No framework. |
+| CI | Windows and Ubuntu: `fmt`, `clippy`, `test`. |
 | Name | Nib. |
 | Look | Terminal-native. |
 | Content highlighting | None in v1. Accent applies to chrome only. |
@@ -104,6 +107,8 @@ Alphabet `abcdefghjkmnpqrstuvwxyz23456789` (no `i l o 0 1`), 4 characters, rando
 - not inserted into FTS; `label` is stored in the clear and used for the list row
 
 Reading: prompt (or `NIB_PASSPHRASE`), wrong passphrase → `cannot unlock <id>` and exit 1. Never print the passphrase, never log it, never write it to disk. Because there is no store-wide key, no unlock screen and no keyring are needed.
+
+A sealed paste's `label` is stored in the clear and **is** indexed for search, so a secret can be found by the name you gave it. The body never enters FTS. Without a label, a sealed paste is reachable only by ID and shows as `secret <id>` in lists.
 
 ## 5. Core API
 
@@ -180,6 +185,7 @@ One accent only, used for the ID, the cursor and focus rings. Type: `JetBrains M
 ## 9. Packaging
 
 - `cargo install --path crates/nib-cli` for early users; `nib.exe` alone is portable.
+- Local builds use the MSVC toolchain: `rustup default stable-x86_64-pc-windows-msvc`, with VS Build Tools (C++ workload) installed. This is required by `rusqlite`'s bundled SQLite and by Tauri; the GNU target is not supported by Tauri on Windows.
 - Later: a Tauri NSIS installer containing both binaries, unsigned. Expect a SmartScreen warning; say so in the README rather than fight it.
 - Windows 10/11 with WebView2 (present on current builds). Code stays portable — no Windows-only APIs in `nib-core` — but macOS and Linux are untested in v1 and unclaimed.
 
