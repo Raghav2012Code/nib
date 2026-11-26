@@ -5,7 +5,7 @@
 <p align="center"><b>Text lives here. Nothing leaves the machine.</b></p>
 
 <p align="center">
-  github.com/Raghav2012Code/nib â€” source, spec and releases.<br>
+  github.com/Raghav2012Code/nib — source, spec and releases.<br>
   Liked nib? <a href="https://github.com/Raghav2012Code/nib">Star it there</a>, one click is enough.
 </p>
 
@@ -38,14 +38,14 @@ nib 4f2a > run.txt                 # byte-exact
 
 ## Secrets
 
-Any paste can be sealed with its own passphrase â€” Argon2id plus XChaCha20-Poly1305. A sealed paste is never indexed, so search cannot leak it, and its label is the only thing stored in the clear.
+Any paste can be sealed with its own passphrase — Argon2id plus XChaCha20-Poly1305. A sealed paste is never indexed, so search cannot leak it, and its label is the only thing stored in the clear.
 
 ## Docs
 
-- [Design spec](docs/spec.md) â€” scope, data model, CLI surface, app, packaging
-- [CLI splash](docs/design/cli-splash.md) â€” the screen, the mark, the rules
-- [Logo](docs/design/logo.md) â€” the terminal mark and the SVG assets
-- [Questionnaire](docs/design/questionnaire.md) â€” the questions the design answers
+- [Design spec](docs/spec.md) — scope, data model, CLI surface, app, packaging
+- [CLI splash](docs/design/cli-splash.md) — the screen, the mark, the rules
+- [Logo](docs/design/logo.md) — the mark and the SVG assets
+- [Questionnaire](docs/design/questionnaire.md) — the questions the design answers
 
 ## Install
 
