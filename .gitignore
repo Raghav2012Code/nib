@@ -24,3 +24,4 @@ desktop.ini
 
 # Tool output
 .openchamber/
+.playwright-mcp/

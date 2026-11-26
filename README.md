@@ -56,7 +56,15 @@ cargo install --path crates/nib-cli
 echo "kubectl get pods -A" | nib
 ```
 
-Windows installer and the desktop app are not built yet. The crate names `nib` and `nib-cli` are taken on crates.io, so there will be no `cargo install nib`.
+The app runs from source:
+
+```
+cd app
+npm install
+npm run tauri dev
+```
+
+A Windows installer and a release build are not published yet. The crate names `nib` and `nib-cli` are taken on crates.io, so there will be no `cargo install nib`.
 
 ## License
 

@@ -159,12 +159,13 @@ nib rm <id|prefix> [--force]
 
 One window, two panes: list left (ID, derived name, age; newest first), preview right (monospace, wraps, selectable, read-only). Search field pinned above the list, full-text, debounced 100 ms.
 
-- `N` new paste → inline composer at the top of the preview pane; `Ctrl+Enter` saves, `Esc` cancels.
-- `Enter` copies the selected paste. `E` edits. `Del` asks once, then deletes.
-- Secret pastes show a locked preview with an unlock field; nothing is decrypted until it is typed.
+- `N` new paste → inline composer at the top of the preview pane; `Ctrl+Enter` saves, `Esc` cancels. The composer carries `expires` (never, 1 hour, 1 day, 7 days), a `seal` toggle that reveals label / passphrase / confirm, and a live character count.
+- `Enter` copies the selected paste. `E` edits. `Del` asks once in the footer, then deletes. `Ctrl+E` exports through a save dialog. `/` focuses search, `j`/`k` or the arrows move.
+- Secret pastes show a locked preview with a passphrase field; nothing is decrypted until it is typed, and the header then reads `sealed · unlocked`.
 - Empty store: a one-line hint and the shortcut to add, nothing else.
-- Errors appear as a single-line strip at the bottom, never a modal.
-- Commands exposed to the UI: `list_pastes`, `get_paste`, `reveal_paste`, `add_paste`, `update_paste`, `delete_paste`, `search_pastes`, `copy_paste`, `export_paste`. Each is a thin wrapper over `nib-core`.
+- Errors appear as a single line in the footer, never a modal.
+- The window follows the OS theme through `prefers-color-scheme`; no toggle.
+- Commands exposed to the UI: `list_pastes`, `get_paste`, `reveal_paste`, `add_paste`, `update_paste`, `delete_paste`, `search_pastes`, `copy_paste`, `export_paste`. Each is a thin wrapper over `nib-core`; a command opens the store, uses it and drops it, so no connection outlives a call.
 
 ## 8. Look
 

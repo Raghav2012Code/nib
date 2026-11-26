@@ -54,6 +54,12 @@ Files: `app/` (Tauri v2), `app/src-tauri/src/{main,commands}.rs`, `app/src/{inde
 
 **Done when:** the ten-interaction checklist in spec §10 passes by hand.
 
+**Done 2026-11-26.** Tauri 2.12, Vite 8, plain TypeScript. `src-tauri` is excluded from the root workspace so `cargo test` at the root stays fast; the app builds through `npm --prefix app run tauri dev`. Nine commands wrap `nib-core`, with no SQL or crypto outside the core. The window follows the OS theme. `app/src/mock.ts` is a dev-only stand-in for the IPC so the UI can be inspected in a plain browser; Vite removes it from production builds (checked: the built bundle contains no mock data).
+
+Verified: the window opens with the title `nib`, the first `list_pastes` call creates the store, the two panes render from real IPC data, the search field, composer, seal fields, unlock panel and delete confirmation all work, and the icons are generated from `assets/nib-appicon.svg`.
+
+Not verified by me: the native window's own pixels — a desktop screenshot captured the wrong window and exposed unrelated content, so it was deleted rather than repeated. The UI itself was verified in Chromium against the same CSS and TypeScript.
+
 ## Phase 4 — ship
 
 1. CI workflow: `fmt --check`, `clippy -D warnings`, `test` on `windows-latest` and `ubuntu-latest`.

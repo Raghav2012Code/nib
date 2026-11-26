@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>nib</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+    <script type="module" src="/src/main.ts" defer></script>
+  </head>
+
+  <body>
+    <div class="app">
+      <header class="bar">
+        <span class="brand">nib</span>
+        <div class="search">
+          <input
+            id="search"
+            type="text"
+            placeholder="search contents"
+            autocomplete="off"
+            spellcheck="false"
+            aria-label="search pastes"
+          />
+          <kbd>/</kbd>
+        </div>
+        <span id="count"></span>
+      </header>
+
+      <main class="panes">
+        <nav id="list" class="list" role="listbox" aria-label="pastes"></nav>
+        <section id="preview" class="preview"></section>
+      </main>
+
+      <footer id="status" class="status"></footer>
+    </div>
+  </body>
+</html>
