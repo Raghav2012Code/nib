@@ -138,9 +138,6 @@ async function select(index: number): Promise<void> {
 }
 
 async function loadPaste(): Promise<void> {
-  if (!selectedId || query) {
-    if (!selectedId) paste = null;
-  }
   if (!selectedId) {
     paste = null;
     return;
@@ -158,16 +155,19 @@ async function loadPaste(): Promise<void> {
 }
 
 async function setQuery(value: string): Promise<void> {
-  query = value.trim();
-  if (!query) {
+  const q = value.trim();
+  query = q;
+  if (!q) {
     hits = [];
-    if (!selectedId) selectedId = items[0]?.id ?? null;
+    if (!rows().some((r) => r.id === selectedId)) {
+      selectedId = items[0]?.id ?? null;
+    }
     await loadPaste();
     render();
     return;
   }
-  const found = await api.search(query, 20);
-  if (query !== value.trim()) return;
+  const found = await api.search(q, 20);
+  if (q !== query) return;
   hits = found;
   if (!hits.some((h) => h.id === selectedId)) {
     selectedId = hits[0]?.id ?? null;
@@ -206,6 +206,7 @@ function renderList(): void {
   const nodes = list.map((row, index) => {
     const button = node("button", "row");
     button.type = "button";
+    button.tabIndex = -1;
     button.dataset.index = String(index);
     button.setAttribute("role", "option");
     if (row.id === selectedId) button.setAttribute("aria-selected", "true");
@@ -477,13 +478,13 @@ async function onKey(event: KeyboardEvent): Promise<void> {
     return;
   }
 
-  if (typing) {
+  if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "e") {
+    event.preventDefault();
+    if (mode !== "compose") await exportSelected();
     return;
   }
 
-  if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "e") {
-    event.preventDefault();
-    await exportSelected();
+  if (typing) {
     return;
   }
 
