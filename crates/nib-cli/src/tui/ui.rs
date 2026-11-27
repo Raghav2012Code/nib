@@ -88,12 +88,15 @@ fn header(frame: &mut Frame, area: Rect, app: &App) {
     );
 }
 
-/// The widest the interface grows. Beyond this the layout would stretch into
-/// empty space and stop reading as one composition.
-const COLUMN: u16 = 90;
-
+/// The column is one composition, not an edge-to-edge layout, but it steps up
+/// with the window so a fullscreen terminal is not a postcard in a void.
 fn column(area: Rect) -> Rect {
-    let width = area.width.min(COLUMN);
+    let cap = match area.width {
+        170.. => 120,
+        120..=169 => 100,
+        _ => 90,
+    };
+    let width = area.width.min(cap);
     Rect {
         x: area.x + (area.width - width) / 2,
         width,
@@ -130,6 +133,14 @@ fn home(frame: &mut Frame, area: Rect, app: &App) {
     let col = column(area);
     let axis = col.x + col.width / 2;
 
+    // The mark doubles when the window can carry a bigger hero. Below that it
+    // stays at one cell per pixel, which is the size that reads at 80 columns.
+    let mut scale = if area.height >= 30 && col.width >= 100 {
+        2
+    } else {
+        1
+    };
+
     // The mark and its line are the hero; they exist only on Home, so Add and
     // the rest open as focused screens.
     let menu_h = MENU.len() as u16;
@@ -141,48 +152,61 @@ fn home(frame: &mut Frame, area: Rect, app: &App) {
 
     let mut rows = wanted;
     let mut hero = true;
-    let mut height = 11 + 1 + menu_h + 1 + 1 + rows;
+    let hero_height = |scale: u16| (MARK.len() as u16) * scale + 1;
+    let mut height = hero_height(scale) + 1 + menu_h + 1 + 1 + rows;
+
     while height > area.height && rows > 0 {
         rows -= 1;
         height -= 1;
     }
+    if height > area.height && scale > 1 {
+        scale = 1;
+        height = hero_height(scale) + 1 + menu_h + 1 + 1 + rows;
+    }
     if height > area.height {
         hero = false;
-        height -= 11;
+        height -= hero_height(scale);
     }
 
     let mut y = area.y + area.height.saturating_sub(height) / 2;
 
     if hero {
         for (i, row_text) in MARK.iter().enumerate() {
-            let width = row_text.chars().count() as u16;
-            let rect = Rect {
-                x: axis - width / 2,
-                y: y + i as u16,
-                width,
-                height: 1,
-            };
-            if i + 1 == MARK.len() {
-                // The tip is the one warm pixel in the mark.
-                frame.render_widget(
-                    Paragraph::new(Line::from(vec![
-                        Span::styled("  ▀▀", Style::new().fg(mark_colour(i))),
-                        Span::styled("█", Style::new().fg(accent())),
-                        Span::styled("▀▀  ", Style::new().fg(mark_colour(i))),
-                    ])),
-                    rect,
-                );
-            } else {
-                frame.render_widget(
-                    Paragraph::new(Span::styled(
-                        row_text.to_string(),
-                        Style::new().fg(mark_colour(i)),
-                    )),
-                    rect,
-                );
+            let width = row_text.chars().count() as u16 * scale;
+            for repeat in 0..scale {
+                let rect = Rect {
+                    x: axis - width / 2,
+                    y: y + i as u16 * scale + repeat,
+                    width,
+                    height: 1,
+                };
+                if i + 1 == MARK.len() {
+                    // The tip is the one warm pixel in the mark.
+                    let steel = Style::new().fg(mark_colour(i));
+                    let pad = "  ".repeat(scale as usize);
+                    let bars = "▀▀".repeat(scale as usize);
+                    let ember = "█".repeat(scale as usize);
+                    frame.render_widget(
+                        Paragraph::new(Line::from(vec![
+                            Span::styled(format!("{pad}{bars}"), steel),
+                            Span::styled(ember, Style::new().fg(accent())),
+                            Span::styled(format!("{bars}{pad}"), steel),
+                        ])),
+                        rect,
+                    );
+                } else {
+                    let doubled: String = row_text
+                        .chars()
+                        .flat_map(|c| std::iter::repeat_n(c, scale as usize))
+                        .collect();
+                    frame.render_widget(
+                        Paragraph::new(Span::styled(doubled, Style::new().fg(mark_colour(i)))),
+                        rect,
+                    );
+                }
             }
         }
-        y += MARK.len() as u16;
+        y += (MARK.len() as u16) * scale;
         frame.render_widget(
             Paragraph::new(Span::styled(TAGLINE, muted())).alignment(Alignment::Center),
             Rect {
@@ -195,7 +219,6 @@ fn home(frame: &mut Frame, area: Rect, app: &App) {
         y += 2;
     }
 
-    // Labels end just left of the axis and descriptions start just right of
     // The marker and label are one right-aligned unit, so the marker hugs its
     // label and every label ends on the same column, just left of the axis.
     let label_width = 17u16;
@@ -230,7 +253,7 @@ fn home(frame: &mut Frame, area: Rect, app: &App) {
 
     // The list is narrower than the column and centred in it, so the age sits
     // near its name instead of drifting to the edge of a wide terminal.
-    let list_width = col.width.saturating_sub(4).min(64);
+    let list_width = col.width.saturating_sub(8).min(72);
     let list_x = col.x + (col.width - list_width) / 2;
 
     let count = app.recent.len();
@@ -735,7 +758,7 @@ mod tests {
         let lines = lines(&buffer);
         let rule = lines.iter().find(|l| l.contains('─')).unwrap();
         let rule_start = rule.find('─').unwrap();
-        assert_eq!(rule_start, ((width - COLUMN) / 2) as usize);
+        assert_eq!(rule_start, ((width - 120) / 2) as usize);
 
         let header = &lines[0];
         let brand = header.find("nib").unwrap();
@@ -750,6 +773,35 @@ mod tests {
         let tag_end = tagline.rfind('.').unwrap();
         let centre = (tag_start + tag_end) / 2;
         assert!((centre as i32 - (width / 2) as i32).abs() <= 1);
+    }
+
+    #[test]
+    fn the_mark_doubles_only_when_the_window_can_carry_it() {
+        let small = lines(&render(&app(), 80, 24));
+        let small_rows = small.iter().filter(|l| l.contains('█')).count();
+        assert_eq!(small_rows, 10, "80x24 keeps the 1x mark");
+
+        let large = lines(&render(&app(), 140, 40));
+        let large_rows = large.iter().filter(|l| l.contains('█')).count();
+        assert_eq!(large_rows, 20, "140x40 doubles the mark");
+
+        let short = lines(&render(&app(), 140, 30));
+        let short_rows = short.iter().filter(|l| l.contains('█')).count();
+        assert_eq!(short_rows, 10, "a wide but short window keeps 1x");
+    }
+
+    #[test]
+    fn the_column_steps_up_with_the_window() {
+        for (width, cap) in [(80u16, 80u16), (100, 90), (140, 100), (200, 120)] {
+            let lines = lines(&render(&app(), width, 40));
+            let rule = lines.iter().find(|l| l.contains('─')).unwrap();
+            let start = rule.find('─').unwrap();
+            assert_eq!(
+                start,
+                ((width - cap) / 2) as usize,
+                "width {width} should use a {cap} column"
+            );
+        }
     }
 
     #[test]

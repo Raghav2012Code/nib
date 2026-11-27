@@ -1,6 +1,6 @@
 [package]
 name = "nib-app"
-version = "0.2.1"
+version = "0.2.2"
 description = "nib — offline pastebin"
 authors = ["Raghav Krishna"]
 edition = "2024"
