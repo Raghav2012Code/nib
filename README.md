@@ -38,7 +38,7 @@ nib 4f2a > run.txt                 # byte-exact
 
 `nib add` with no text and no pipe waits for input and says how to finish it: Ctrl+Z then Enter on Windows, Ctrl+D elsewhere.
 
-`nib` alone opens a three-line launcher: add, find, recent. No full-screen TUI, no arrow keys, no modes.
+`nib` alone opens the terminal app: a menu you move with arrows, a focused editor for new pastes, live search, and previews. `q` quits.
 
 ## In the window
 
@@ -54,7 +54,7 @@ The same pages are published at **https://raghav2012code.github.io/nib/** — bu
 
 - [Design spec](docs/spec.md) — scope, data model, CLI surface, app, packaging
 - [Plan](docs/plan.md) — phases and what each one proved
-- [CLI splash](docs/design/cli-splash.md) — the screen, the mark, the rules
+- [Terminal app](docs/design/terminal-ui.md) - screens, keys, layout, colour
 - [Logo](docs/design/logo.md) — the mark and the SVG assets
 - [Questionnaire](docs/design/questionnaire.md) — the questions the design answers
 - [AGENTS.md](AGENTS.md) — how to work in this repo

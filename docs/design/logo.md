@@ -60,7 +60,7 @@ Mark centred, `n i b` in bold one row below it, one cell of tracking, `#e8e6e1`,
 
 - The ramp is the mark. Do not flatten it to one colour, and do not add a second warm colour.
 - On a light surface use the tile, never `nib-cli.svg`.
-- Below 60×24 the splash drops the mark and prints `nib` alone.
+- Below 60×24 the terminal app draws one size message and no mark.
 - `NO_COLOR` keeps the shape; the point is geometry, not colour.
 
-Implemented in `crates/nib-cli/src/splash.rs` (terminal) and `assets/*.svg` (everywhere else).
+Implemented in `crates/nib-cli/src/tui/` (terminal) and `assets/*.svg` (everywhere else).

@@ -17,10 +17,10 @@ Nib is an offline pastebin: one local store for text snippets, reached from a te
 3. `nib get <id>` prints the paste byte-identical to what went in.
 4. The window opens, lists pastes with recognizable names, and shows the selected one without a click.
 5. A paste marked secret cannot be read from the database file without its passphrase.
-6. `nib` alone in a terminal shows the splash, and reaching a new paste costs two keystrokes.
+6. `nib` alone in a terminal opens the app, and reaching a new paste costs two keystrokes.
 7. Both surfaces look like one product.
 
-**State.** Criteria 1, 3, 4, 5 and 7 are covered by tests and by a manual pass. Criterion 2 is designed for (`trigram`, indexed) but unmeasured at 10,000 pastes. Criterion 6 is implemented but its splash has not been run in a real terminal by the author of the code — it is the one thing left to eyeball.
+**State.** Criteria 1, 3, 4 and 5 are covered by tests. Criterion 2 is designed for (`trigram`, indexed) but unmeasured at 10,000 pastes. Criteria 6 and 7 are implemented and the terminal app was run by hand at 80×24 and 140×40.
 
 ## 2. Decisions locked
 
@@ -37,7 +37,7 @@ Nib is an offline pastebin: one local store for text snippets, reached from a te
 | Store | One SQLite file, FTS5, WAL. |
 | CLI verbs | `add ls get copy edit search rm`. |
 | CLI output | Bytes to stdout. Colour only when stdout is a TTY. |
-| Terminal UI | No browser TUI. Bare `nib` shows a splash launcher with three actions. |
+| Terminal UI | A full-screen app: Home menu, focused editor, live search, preview. No mouse. |
 | IDs | 4-char lowercase slug, unique-prefix match. |
 | GUI | Tauri (Rust core + web UI), two-pane list + preview. |
 | Capture in app | In-app only. No tray, no global hotkey. |
@@ -62,7 +62,7 @@ nib/
   app/src/                   HTML/CSS/TS view
   assets/                    nib-mark.svg, nib-appicon.svg, nib-wordmark.svg
   docs/spec.md               this file
-  docs/design/               logo, CLI splash, questionnaire
+  docs/design/               logo, terminal app, questionnaire
 ```
 
 **Rule that keeps the two UIs honest:** only `nib-core` opens the database. The CLI and the Tauri commands are both thin callers. No SQL, no crypto, no ID logic outside `nib-core`.
@@ -156,7 +156,7 @@ nib rm <id|prefix> [--force]
 - `copy` uses `arboard`. Not available → exit 1 with a plain message.
 - Errors are one line, lowercase, no stack traces. Exit 0 on success, 1 on any failure, 2 on usage error.
 - `nib --version` prints `nib <version>` and nothing else. `--help` prints usage. Neither prints art.
-- **Splash:** bare `nib`, no arguments, stdin and stdout both TTYs → the launcher described in `docs/design/cli-splash.md`: half-block nib mark, tagline, store path, a bordered 1/2/3 menu (add via `$EDITOR`, search, recent), footer `1-3 choose · q quit`. One key read, no alternate screen, no redraw, no arrow keys. Missing above `60×24` → one usage line instead. Piped stdin never reaches the splash.
+- **The app:** bare `nib` with a terminal attached opens the full-screen interface described in `docs/design/terminal-ui.md` — Home with a movable menu and recent pastes, Add with a focused editor and `Ctrl+S`, Find with live results, Recent, and Preview with copy and in-place unlocking. Below 60×24 it draws one size message. `q` quits from Home, `Ctrl+C` from anywhere. Piped stdin never reaches the app.
 
 ## 7. App
 

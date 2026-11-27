@@ -7,7 +7,7 @@ Nib is an offline pastebin: one SQLite store, a CLI (`nib`) and a Tauri window o
 | Path | What lives there |
 |---|---|
 | `crates/nib-core/` | All logic: store, ids, search, sealing, expiry. The only crate that opens SQLite. |
-| `crates/nib-cli/` | `bin nib`. Verbs, stream rules, splash. |
+| `crates/nib-cli/` | `bin nib`. Verbs, stream rules, and the full-screen terminal app. |
 | `app/` | Tauri 2 + Vite + plain TypeScript. `src-tauri` is excluded from the root workspace. |
 | `app/src/mock.ts` | Dev-only IPC stand-in so the UI runs in a browser. Must never ship. |
 | `site/` | Docusaurus. Its docs plugin points at `../docs`, so the spec has one copy. |
@@ -17,7 +17,7 @@ Nib is an offline pastebin: one SQLite store, a CLI (`nib`) and a Tauri window o
 ## Commands
 
 ```powershell
-cargo test                       # core + CLI, 22 tests
+cargo test                       # core, CLI and the terminal app
 cargo fmt --all
 cargo clippy --all-targets -- -D warnings
 cargo install --path crates/nib-cli
@@ -71,5 +71,5 @@ cd site; npm run build           # the docs site, same Markdown as docs/
 
 1. `Select-String dist/assets/*.js -Pattern 'mockApi|ssh-ed25519'` must find nothing.
 2. `cargo fmt --all --check`, clippy with `-D warnings`, `cargo test`, `npm run build`.
-3. Bump `version` in `Cargo.toml`, `app/src-tauri/Cargo.toml`, `app/package.json` and `app/src-tauri/tauri.conf.json` together.
+3. Bump `version` in `Cargo.toml`, `app/src-tauri/Cargo.toml`, `app/package.json`, `app/src-tauri/tauri.conf.json` and `site/package.json` together.
 4. `cd app; npm run tauri build` produces an unsigned NSIS installer; note the SmartScreen warning in release notes.

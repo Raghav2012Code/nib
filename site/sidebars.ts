@@ -8,7 +8,7 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Design',
       collapsed: false,
-      items: ['design/logo', 'design/cli-splash', 'design/questionnaire'],
+      items: ['design/logo', 'design/terminal-ui', 'design/questionnaire'],
     },
     {
       type: 'link',

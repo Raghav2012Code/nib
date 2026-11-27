@@ -76,6 +76,14 @@ Verified on this machine: the CLI stored and read back a paste; the release wind
 
 The installer does not edit `PATH`; the CLI ships beside it as a portable binary instead. Putting a directory into a user's `PATH` from NSIS is the one place an installer can quietly break a machine, and a pre-alpha does not earn that risk.
 
+## Phase 5 — the terminal app
+
+The splash could not scroll, could not take focus, and its hand-padded rows collided. It was replaced by a ratatui application: Home with a movable menu and recent pastes, Add with a focused editor, Find with live results, Recent, and Preview with copy and in-place unlocking.
+
+The split is a pure state machine (keys in, effects out) plus a renderer tested against ratatui's test backend. The state machine owns every transition; the render tests own layout — including the assertion that a menu label and its description never touch at 60 columns. The terminal lifecycle restores the screen on quit, on Ctrl+C and on panic.
+
+Shipped as 0.2.0.
+
 ## Order and why
 
 Core before CLI, CLI before app. The core is where the risky decisions live (FTS schema, crypto envelope); the CLI exercises all of it with the smallest possible surface; the app is a view and should not be able to hide a broken store. The alternative — app first — spends the most time on the part that can be rebuilt cheapest.
