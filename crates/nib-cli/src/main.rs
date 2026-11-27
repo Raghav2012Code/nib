@@ -1,6 +1,6 @@
 mod args;
 mod render;
-mod splash;
+mod tui;
 mod util;
 
 use std::io::{self, IsTerminal, Write};
@@ -173,7 +173,7 @@ fn bare() -> Result<(), String> {
         println!("{id}");
         return Ok(());
     }
-    splash::run(&store)
+    tui::run(&store)
 }
 
 fn read_paste(store: &Store, id: &str) -> Result<String, String> {

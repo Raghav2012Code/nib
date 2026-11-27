@@ -32,10 +32,6 @@ impl Paint {
         self.wrap("38;5;244", text)
     }
 
-    pub fn bold(&self, text: &str) -> String {
-        self.wrap("1", text)
-    }
-
     fn highlight(&self, text: &str) -> String {
         if self.on {
             text.replace('\u{1}', "\x1b[4m")
