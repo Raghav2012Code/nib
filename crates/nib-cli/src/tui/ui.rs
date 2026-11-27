@@ -171,40 +171,10 @@ fn home(frame: &mut Frame, area: Rect, app: &App) {
     let mut y = area.y + area.height.saturating_sub(height) / 2;
 
     if hero {
-        for (i, row_text) in MARK.iter().enumerate() {
-            let width = row_text.chars().count() as u16 * scale;
-            for repeat in 0..scale {
-                let rect = Rect {
-                    x: axis - width / 2,
-                    y: y + i as u16 * scale + repeat,
-                    width,
-                    height: 1,
-                };
-                if i + 1 == MARK.len() {
-                    // The tip is the one warm pixel in the mark.
-                    let steel = Style::new().fg(mark_colour(i));
-                    let pad = "  ".repeat(scale as usize);
-                    let bars = "▀▀".repeat(scale as usize);
-                    let ember = "█".repeat(scale as usize);
-                    frame.render_widget(
-                        Paragraph::new(Line::from(vec![
-                            Span::styled(format!("{pad}{bars}"), steel),
-                            Span::styled(ember, Style::new().fg(accent())),
-                            Span::styled(format!("{bars}{pad}"), steel),
-                        ])),
-                        rect,
-                    );
-                } else {
-                    let doubled: String = row_text
-                        .chars()
-                        .flat_map(|c| std::iter::repeat_n(c, scale as usize))
-                        .collect();
-                    frame.render_widget(
-                        Paragraph::new(Span::styled(doubled, Style::new().fg(mark_colour(i)))),
-                        rect,
-                    );
-                }
-            }
+        if scale == 1 {
+            draw_mark(frame, axis, y);
+        } else {
+            draw_mark_scaled(frame, axis, y);
         }
         y += (MARK.len() as u16) * scale;
         frame.render_widget(
@@ -305,6 +275,71 @@ fn home(frame: &mut Frame, area: Rect, app: &App) {
                 height: 1,
             },
         );
+    }
+}
+
+/// The mark at one cell per pixel: the glyphs are drawn as designed, with the
+/// ember point on the last row.
+fn draw_mark(frame: &mut Frame, axis: u16, y: u16) {
+    for (i, row_text) in MARK.iter().enumerate() {
+        let width = row_text.chars().count() as u16;
+        let rect = Rect {
+            x: axis - width / 2,
+            y: y + i as u16,
+            width,
+            height: 1,
+        };
+        if i + 1 == MARK.len() {
+            frame.render_widget(
+                Paragraph::new(Line::from(vec![
+                    Span::styled("  ▀▀", Style::new().fg(mark_colour(i))),
+                    Span::styled("█", Style::new().fg(accent())),
+                    Span::styled("▀▀  ", Style::new().fg(mark_colour(i))),
+                ])),
+                rect,
+            );
+        } else {
+            frame.render_widget(
+                Paragraph::new(Span::styled(
+                    row_text.to_string(),
+                    Style::new().fg(mark_colour(i)),
+                )),
+                rect,
+            );
+        }
+    }
+}
+
+/// The same mark at twice the resolution. Each source cell holds two pixel
+/// rows, so doubling the pixels means two output rows per source row: the
+/// upper one shows the cell's top half, the lower one its bottom half. Repeating
+/// the glyphs instead would turn `▀` into a bar with a notch, which is what
+/// made the big mark look broken.
+fn draw_mark_scaled(frame: &mut Frame, axis: u16, y: u16) {
+    for (i, row_text) in MARK.iter().enumerate() {
+        let width = row_text.chars().count() as u16 * 2;
+        for (half, top) in [(0u16, true), (1, false)] {
+            let mut spans: Vec<Span<'static>> = Vec::new();
+            for c in row_text.chars() {
+                let filled = matches!((c, top), ('█', _) | ('▀', true) | ('▄', false));
+                if !filled {
+                    spans.push(Span::raw("  "));
+                    continue;
+                }
+                let ember = i + 1 == MARK.len() && c == '█';
+                let style = Style::new().fg(if ember { accent() } else { mark_colour(i) });
+                spans.push(Span::styled("██", style));
+            }
+            frame.render_widget(
+                Paragraph::new(Line::from(spans)),
+                Rect {
+                    x: axis - width / 2,
+                    y: y + i as u16 * 2 + half,
+                    width,
+                    height: 1,
+                },
+            );
+        }
     }
 }
 
