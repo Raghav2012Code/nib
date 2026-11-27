@@ -18,6 +18,8 @@
 
 Six bands, top to bottom: header, rule, body, rule, footer, status.
 
+**Scaling.** The interface never grows wider than 90 columns. On a wider terminal the whole thing — header, rules, hero, menu, list, footer — is one centred column, so a 220-column window shows the same composition with margins instead of a layout stretched into empty space. Home centres its content vertically when there is spare height; Add, Find, Recent and Preview stay top-aligned. The recent list is narrower than the column and centred in it, so ages sit near their names instead of at the far edge.
+
 Home opens on the mark, centred, with one line under it. The mark and its line belong to Home only: opening Add, Find, Recent or Preview replaces them with that screen, so the focused view has nothing above it but the header.
 
 ```

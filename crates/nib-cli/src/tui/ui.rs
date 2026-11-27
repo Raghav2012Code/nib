@@ -66,7 +66,8 @@ fn too_small(frame: &mut Frame, area: Rect) {
 }
 
 fn header(frame: &mut Frame, area: Rect, app: &App) {
-    let cols = Layout::horizontal([Constraint::Length(8), Constraint::Min(0)]).split(area);
+    let col = column(area);
+    let cols = Layout::horizontal([Constraint::Length(8), Constraint::Min(0)]).split(col);
     frame.render_widget(
         Paragraph::new(Span::styled(
             " nib",
@@ -87,10 +88,26 @@ fn header(frame: &mut Frame, area: Rect, app: &App) {
     );
 }
 
+/// The widest the interface grows. Beyond this the layout would stretch into
+/// empty space and stop reading as one composition.
+const COLUMN: u16 = 90;
+
+fn column(area: Rect) -> Rect {
+    let width = area.width.min(COLUMN);
+    Rect {
+        x: area.x + (area.width - width) / 2,
+        width,
+        ..area
+    }
+}
+
 fn rule(frame: &mut Frame, area: Rect) {
     frame.render_widget(
-        Paragraph::new(Span::styled(RULE.repeat(area.width as usize), muted())),
-        area,
+        Paragraph::new(Span::styled(
+            RULE.repeat(column(area).width as usize),
+            muted(),
+        )),
+        column(area),
     );
 }
 
@@ -110,17 +127,37 @@ const MARK: [&str; 10] = [
 const TAGLINE: &str = "Offline pastebin for your terminal.";
 
 fn home(frame: &mut Frame, area: Rect, app: &App) {
+    let col = column(area);
+    let axis = col.x + col.width / 2;
+
     // The mark and its line are the hero; they exist only on Home, so Add and
     // the rest open as focused screens.
-    let hero = (MARK.len() as u16) + 1;
-    let mut y = area.y;
+    let menu_h = MENU.len() as u16;
+    let wanted = if app.recent.is_empty() {
+        1
+    } else {
+        app.recent.len().min(10) as u16
+    };
 
-    if area.height >= hero + 1 + MENU.len() as u16 {
+    let mut rows = wanted;
+    let mut hero = true;
+    let mut height = 11 + 1 + menu_h + 1 + 1 + rows;
+    while height > area.height && rows > 0 {
+        rows -= 1;
+        height -= 1;
+    }
+    if height > area.height {
+        hero = false;
+        height -= 11;
+    }
+
+    let mut y = area.y + area.height.saturating_sub(height) / 2;
+
+    if hero {
         for (i, row_text) in MARK.iter().enumerate() {
             let width = row_text.chars().count() as u16;
-            let x = area.x + (area.width.saturating_sub(width)) / 2;
             let rect = Rect {
-                x,
+                x: axis - width / 2,
                 y: y + i as u16,
                 width,
                 height: 1,
@@ -149,48 +186,52 @@ fn home(frame: &mut Frame, area: Rect, app: &App) {
         frame.render_widget(
             Paragraph::new(Span::styled(TAGLINE, muted())).alignment(Alignment::Center),
             Rect {
+                x: col.x,
                 y,
+                width: col.width,
                 height: 1,
-                ..area
             },
         );
         y += 2;
     }
 
-    let block_width = 46.min(area.width);
-    let block_x = area.x + (area.width - block_width) / 2;
-
+    // Labels end just left of the axis and descriptions start just right of
+    // The marker and label are one right-aligned unit, so the marker hugs its
+    // label and every label ends on the same column, just left of the axis.
+    let label_width = 17u16;
+    let start_x = axis.saturating_sub(label_width + 2);
     for (i, (label, desc)) in MENU.iter().enumerate() {
         let selected = i == app.menu;
-        let marker = if selected { "›" } else { " " };
-        let label_style = if selected {
+        let unit = format!("{}{label}", if selected { "› " } else { "  " });
+        let style = if selected {
             Style::new().fg(accent()).add_modifier(Modifier::BOLD)
         } else {
             Style::new()
         };
         let line = Line::from(vec![
-            Span::styled(format!(" {marker} "), Style::new().fg(accent())),
-            Span::styled(format!("{label:<16}"), label_style),
+            Span::styled(
+                format!("{unit:>width$}", width = label_width as usize),
+                style,
+            ),
+            Span::raw("    "),
             Span::styled(*desc, muted()),
         ]);
         frame.render_widget(
             Paragraph::new(line),
             Rect {
-                x: block_x,
+                x: start_x,
                 y: y + i as u16,
-                width: block_width,
+                width: col.x + col.width - start_x,
                 height: 1,
             },
         );
     }
-    y += MENU.len() as u16;
+    y += menu_h + 1;
 
-    if area.y + area.height < y + 2 {
-        return;
-    }
-    if area.y + area.height >= y + 5 {
-        y += 1;
-    }
+    // The list is narrower than the column and centred in it, so the age sits
+    // near its name instead of drifting to the edge of a wide terminal.
+    let list_width = col.width.saturating_sub(4).min(64);
+    let list_x = col.x + (col.width - list_width) / 2;
 
     let count = app.recent.len();
     frame.render_widget(
@@ -203,36 +244,42 @@ fn home(frame: &mut Frame, area: Rect, app: &App) {
             muted(),
         )),
         Rect {
+            x: list_x,
             y,
+            width: list_width,
             height: 1,
-            ..area
         },
     );
     y += 1;
 
+    if rows == 0 {
+        return;
+    }
+
     if app.recent.is_empty() {
         frame.render_widget(
             Paragraph::new(Span::styled(
-                " nothing stored yet · n writes the first one",
+                "  nothing stored yet · n writes the first one",
                 muted(),
             )),
             Rect {
+                x: list_x,
                 y,
+                width: list_width,
                 height: 1,
-                ..area
             },
         );
         return;
     }
 
-    let rows = area.y + area.height - y;
     for (i, item) in app.recent.iter().take(rows as usize).enumerate() {
         frame.render_widget(
-            Paragraph::new(list_row(item, area.width)),
+            Paragraph::new(list_row(item, list_width)),
             Rect {
+                x: list_x,
                 y: y + i as u16,
+                width: list_width,
                 height: 1,
-                ..area
             },
         );
     }
@@ -488,7 +535,7 @@ fn footer(frame: &mut Frame, area: Rect, app: &App) {
             Span::raw(" "),
             Span::styled(keys, muted()),
         ])),
-        area,
+        column(area),
     );
 }
 
@@ -501,7 +548,7 @@ fn status(frame: &mut Frame, area: Rect, app: &App) {
         };
         frame.render_widget(
             Paragraph::new(Line::from(vec![Span::raw("  "), Span::styled(text, style)])),
-            area,
+            column(area),
         );
         return;
     }
@@ -537,8 +584,8 @@ fn status(frame: &mut Frame, area: Rect, app: &App) {
         ),
     };
 
-    let chunks =
-        Layout::horizontal([Constraint::Percentage(50), Constraint::Percentage(50)]).split(area);
+    let chunks = Layout::horizontal([Constraint::Percentage(50), Constraint::Percentage(50)])
+        .split(column(area));
     frame.render_widget(
         Paragraph::new(Span::styled(format!(" {left}"), muted())).alignment(Alignment::Left),
         chunks[0],
@@ -679,6 +726,30 @@ mod tests {
             },
         ]);
         app
+    }
+
+    #[test]
+    fn a_wide_terminal_keeps_one_centred_column() {
+        let width = 200u16;
+        let buffer = render(&app(), width, 50);
+        let lines = lines(&buffer);
+        let rule = lines.iter().find(|l| l.contains('─')).unwrap();
+        let rule_start = rule.find('─').unwrap();
+        assert_eq!(rule_start, ((width - COLUMN) / 2) as usize);
+
+        let header = &lines[0];
+        let brand = header.find("nib").unwrap();
+        assert!(brand >= rule_start as usize);
+        assert!(brand < rule_start as usize + 10);
+
+        let tagline = lines
+            .iter()
+            .find(|l| l.contains("Offline pastebin"))
+            .unwrap();
+        let tag_start = tagline.find('O').unwrap();
+        let tag_end = tagline.rfind('.').unwrap();
+        let centre = (tag_start + tag_end) / 2;
+        assert!((centre as i32 - (width / 2) as i32).abs() <= 1);
     }
 
     #[test]
