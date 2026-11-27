@@ -739,8 +739,8 @@ mod tests {
 
         let header = &lines[0];
         let brand = header.find("nib").unwrap();
-        assert!(brand >= rule_start as usize);
-        assert!(brand < rule_start as usize + 10);
+        assert!(brand >= rule_start);
+        assert!(brand < rule_start + 10);
 
         let tagline = lines
             .iter()
