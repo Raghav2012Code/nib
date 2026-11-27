@@ -905,7 +905,7 @@ dependencies = [
 
 [[package]]
 name = "nib-cli"
-version = "0.2.2"
+version = "0.2.3"
 dependencies = [
  "arboard",
  "assert_cmd",
@@ -919,7 +919,7 @@ dependencies = [
 
 [[package]]
 name = "nib-core"
-version = "0.2.2"
+version = "0.2.3"
 dependencies = [
  "argon2",
  "base64",
