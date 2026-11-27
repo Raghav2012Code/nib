@@ -78,7 +78,7 @@ export default function Home(): ReactNode {
               what it proved.
             </li>
             <li>
-              <Link to="/docs/design/cli-splash">The splash</Link> and{' '}
+              <Link to="/docs/design/terminal-ui">The terminal app</Link> and{' '}
               <Link to="/docs/design/logo">the mark</Link>.
             </li>
           </ul>
