@@ -94,15 +94,71 @@ fn rule(frame: &mut Frame, area: Rect) {
     );
 }
 
+const MARK: [&str; 10] = [
+    "  ▄███▄  ",
+    "▄███████▄",
+    "█████████",
+    "█████████",
+    "█████████",
+    "████▀████",
+    "████ ████",
+    " ███ ███ ",
+    "  ██ ██  ",
+    "  ▀▀█▀▀  ",
+];
+
+const TAGLINE: &str = "Offline pastebin for your terminal.";
+
 fn home(frame: &mut Frame, area: Rect, app: &App) {
-    let chunks = Layout::vertical([
-        Constraint::Length(1),
-        Constraint::Length(3),
-        Constraint::Length(1),
-        Constraint::Length(1),
-        Constraint::Min(0),
-    ])
-    .split(area);
+    // The mark and its line are the hero; they exist only on Home, so Add and
+    // the rest open as focused screens.
+    let hero = (MARK.len() as u16) + 1;
+    let mut y = area.y;
+
+    if area.height >= hero + 1 + MENU.len() as u16 {
+        for (i, row_text) in MARK.iter().enumerate() {
+            let width = row_text.chars().count() as u16;
+            let x = area.x + (area.width.saturating_sub(width)) / 2;
+            let rect = Rect {
+                x,
+                y: y + i as u16,
+                width,
+                height: 1,
+            };
+            if i + 1 == MARK.len() {
+                // The tip is the one warm pixel in the mark.
+                frame.render_widget(
+                    Paragraph::new(Line::from(vec![
+                        Span::styled("  ▀▀", Style::new().fg(mark_colour(i))),
+                        Span::styled("█", Style::new().fg(accent())),
+                        Span::styled("▀▀  ", Style::new().fg(mark_colour(i))),
+                    ])),
+                    rect,
+                );
+            } else {
+                frame.render_widget(
+                    Paragraph::new(Span::styled(
+                        row_text.to_string(),
+                        Style::new().fg(mark_colour(i)),
+                    )),
+                    rect,
+                );
+            }
+        }
+        y += MARK.len() as u16;
+        frame.render_widget(
+            Paragraph::new(Span::styled(TAGLINE, muted())).alignment(Alignment::Center),
+            Rect {
+                y,
+                height: 1,
+                ..area
+            },
+        );
+        y += 2;
+    }
+
+    let block_width = 46.min(area.width);
+    let block_x = area.x + (area.width - block_width) / 2;
 
     for (i, (label, desc)) in MENU.iter().enumerate() {
         let selected = i == app.menu;
@@ -117,21 +173,42 @@ fn home(frame: &mut Frame, area: Rect, app: &App) {
             Span::styled(format!("{label:<16}"), label_style),
             Span::styled(*desc, muted()),
         ]);
-        frame.render_widget(Paragraph::new(line), row(chunks[1], i as u16));
+        frame.render_widget(
+            Paragraph::new(line),
+            Rect {
+                x: block_x,
+                y: y + i as u16,
+                width: block_width,
+                height: 1,
+            },
+        );
+    }
+    y += MENU.len() as u16;
+
+    if area.y + area.height < y + 2 {
+        return;
+    }
+    if area.y + area.height >= y + 5 {
+        y += 1;
     }
 
     let count = app.recent.len();
     frame.render_widget(
         Paragraph::new(Span::styled(
             if count == 0 {
-                " recent".to_string()
+                "  recent".to_string()
             } else {
-                format!(" recent · {count}")
+                format!("  recent · {count}")
             },
             muted(),
         )),
-        chunks[3],
+        Rect {
+            y,
+            height: 1,
+            ..area
+        },
     );
+    y += 1;
 
     if app.recent.is_empty() {
         frame.render_widget(
@@ -139,23 +216,62 @@ fn home(frame: &mut Frame, area: Rect, app: &App) {
                 " nothing stored yet · n writes the first one",
                 muted(),
             )),
-            chunks[4],
+            Rect {
+                y,
+                height: 1,
+                ..area
+            },
         );
         return;
     }
-    for (i, item) in app
-        .recent
-        .iter()
-        .take(chunks[4].height as usize)
-        .enumerate()
-    {
+
+    let rows = area.y + area.height - y;
+    for (i, item) in app.recent.iter().take(rows as usize).enumerate() {
         frame.render_widget(
             Paragraph::new(list_row(item, area.width)),
-            row(chunks[4], i as u16),
+            Rect {
+                y: y + i as u16,
+                height: 1,
+                ..area
+            },
         );
     }
 }
 
+fn mark_colour(row: usize) -> Color {
+    if no_color() {
+        return Color::Reset;
+    }
+    const DARK: [Color; 10] = [
+        Color::Rgb(215, 236, 254),
+        Color::Rgb(188, 220, 247),
+        Color::Rgb(166, 201, 236),
+        Color::Rgb(147, 183, 221),
+        Color::Rgb(130, 168, 206),
+        Color::Rgb(113, 153, 191),
+        Color::Rgb(98, 139, 176),
+        Color::Rgb(84, 125, 162),
+        Color::Rgb(72, 112, 148),
+        Color::Rgb(61, 94, 128),
+    ];
+    const LIGHT: [Color; 10] = [
+        Color::Rgb(74, 107, 140),
+        Color::Rgb(70, 101, 133),
+        Color::Rgb(65, 95, 126),
+        Color::Rgb(60, 89, 118),
+        Color::Rgb(55, 83, 111),
+        Color::Rgb(50, 77, 104),
+        Color::Rgb(45, 71, 96),
+        Color::Rgb(40, 65, 88),
+        Color::Rgb(35, 59, 80),
+        Color::Rgb(30, 53, 72),
+    ];
+    if light_terminal() {
+        LIGHT[row]
+    } else {
+        DARK[row]
+    }
+}
 fn list_row(item: &Summary, width: u16) -> Line<'static> {
     let age = ago(item.created_at);
     let name_width = (width as usize).saturating_sub(2 + 4 + 2 + age.chars().count() + 2 + 1);
@@ -563,6 +679,39 @@ mod tests {
             },
         ]);
         app
+    }
+
+    #[test]
+    fn home_opens_on_the_mark_and_its_tagline() {
+        let text = lines(&render(&app(), 80, 24)).join("\n");
+        assert!(text.contains("▄███▄"));
+        assert!(text.contains("Offline pastebin for your terminal."));
+        let tagline = text
+            .lines()
+            .find(|l| l.contains("Offline pastebin"))
+            .unwrap();
+        let pad = tagline.find('O').unwrap();
+        assert!(pad > 10, "the tagline should be centred, got {pad}");
+    }
+
+    #[test]
+    fn the_mark_leaves_the_screen_when_focus_moves_to_add() {
+        let mut app = app();
+        app.handle(ratatui::crossterm::event::KeyEvent::from(
+            ratatui::crossterm::event::KeyCode::Enter,
+        ));
+        let text = lines(&render(&app, 80, 24)).join("\n");
+        assert!(!text.contains("Offline pastebin"));
+        assert!(!text.contains("▄███▄"));
+        assert!(text.contains("Ctrl+S save"));
+    }
+
+    #[test]
+    fn home_still_fits_at_the_minimum_height() {
+        let text = lines(&render(&app(), 60, 24)).join("\n");
+        assert!(text.contains("Offline pastebin"));
+        assert!(text.contains("Add a paste"));
+        assert!(text.contains("k3x9"));
     }
 
     #[test]

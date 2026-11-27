@@ -18,17 +18,31 @@
 
 Six bands, top to bottom: header, rule, body, rule, footer, status.
 
+Home opens on the mark, centred, with one line under it. The mark and its line belong to Home only: opening Add, Find, Recent or Preview replaces them with that screen, so the focused view has nothing above it but the header.
+
 ```
  nib                                  C:\Users\you\AppData\Roaming\nib\nib.db
 ────────────────────────────────────────────────────────────────────────────
+                                  ▄███▄
+                                ▄███████▄
+                                █████████
+                                █████████
+                                █████████
+                                ████▀████
+                                ████ ████
+                                 ███ ███
+                                  ██ ██
+                                  ▀▀█▀▀
 
- › Add a paste     write it, Ctrl+S saves
-   Find a paste    search the text, pick a hit
-   Recent pastes   the last ten, open one
+                     Offline pastebin for your terminal.
 
- recent · 2
-  k3x9  fn parse_args() -> Args {                                     2m
-  r8ce  deploy key                                                    1d
+                 › Add a paste     write it, Ctrl+S saves
+                   Find a paste    search the text, pick a hit
+                   Recent pastes   the last ten, open one
+
+  recent · 2
+   k3x9  fn parse_args() -> Args {                                    2m
+   r8ce  deploy key                                                   1d
 
 ────────────────────────────────────────────────────────────────────────────
  ↑↓ move · ↵ open · n new · / find · q quit
